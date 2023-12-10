@@ -14,7 +14,13 @@ app.use(express.json())
 
 
 // routes 
+
+// auth route
 app.use("/api/auth",require("./routes/authRouter"))
+
+// users route
+
+app.use("/api/users",require("./routes/usersRouter"))
 
 const PORT = process.env.PORT || 9000
 app.listen(PORT,() => {

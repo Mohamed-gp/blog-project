@@ -1,6 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcryptjs");
-const { User , verifySignUp} = require("../models/User");
+const { User , verifySignUp, verifyLogin} = require("../models/User");
 
 
 /**
@@ -32,8 +32,41 @@ const signUp = asyncHandler(async (req,res) => {
 });
 
 
+/**
+ * @desc login User
+ * @route /api/auth/login
+ * @method POST
+ * @access public
+ */
+const login = asyncHandler(async (req,res) => {
+    const { error } = verifyLogin(req.body)
+    if (error) {
+        return res.status(400).json({message : error.details[0].message})
+    }
+    const user = await User.findOne({email : req.body.email})
+    if (!user) {
+        return res.status(400).json({message : "user not found you must sign up"})
+    }
+    const passwordMatched = await bcrypt.compare(req.body.password,user.password)
+    if (!passwordMatched) {
+        return res.status(400).json({message : "wrong password"})
+    }
+
+    const token = user.generateAuthToken()
+
+    res.status(200).json({
+        _id : user._id,
+        isAdmin: user.isAdmin,
+        profilePhoto: user.profilePhoto,
+        token,
+    })
+
+
+
+})
+
 
 
 module.exports = {
-    signUp
+    signUp,login
 }

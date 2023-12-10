@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 const joi = require("joi")
+const jwt = require("jsonwebtoken") 
 
 const UserSchema = new mongoose.Schema({
     username: {
@@ -45,6 +46,10 @@ const UserSchema = new mongoose.Schema({
 
 },{timestamps: true}) // to add 2 properties created at and updated at 
 
+// generate auth token
+UserSchema.methods.generateAuthToken = function() {
+    return jwt.sign({id: this._id,isAdmin : this.isAdmin},process.env.JWT_KEY)
+}
 
 const User = mongoose.model("user",UserSchema) // mongo db will add s and make it in small case and add document with the name users that have UserSchema
 
@@ -52,7 +57,7 @@ const User = mongoose.model("user",UserSchema) // mongo db will add s and make i
 const verifySignUp = (object) => {
     const emailSchema = joi.object({
         username: joi.string().required().trim().min(2).max(100),
-        email: joi.string().required().trim().min(5).max(100),
+        email: joi.string().required().trim().min(5).max(100).email(),
         password: joi.string().required().trim().min(8).max(100),
         // profilePhoto: joi.object().default({
         //     url : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png ",
@@ -66,7 +71,14 @@ const verifySignUp = (object) => {
 
     return emailSchema.validate(object)
 }
+const verifyLogin = (obj) => {
+    const loginSchema = joi.object({
+        email: joi.string().required().trim().min(5).max(100).email(),
+        password: joi.string().required().trim().min(8).max(100),
+    })
 
+    return loginSchema.validate(obj)
+}
 
 
 
@@ -75,6 +87,7 @@ const verifySignUp = (object) => {
 
 module.exports = {
     User,
-    verifySignUp
+    verifySignUp,
+    verifyLogin
     
 }
