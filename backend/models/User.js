@@ -84,10 +84,20 @@ const verifyLogin = (obj) => {
 
 
 
+const verifyUpdateUser = (obj) => {
+    const schema = joi.object({
+        username : joi.string().trim().min(2).max(100),
+        password : joi.string().trim().min(8),
+        bio : joi.string()
+    })
+    return schema.validate(obj)
+}
+
 
 module.exports = {
     User,
     verifySignUp,
-    verifyLogin
+    verifyLogin,
+    verifyUpdateUser
     
 }

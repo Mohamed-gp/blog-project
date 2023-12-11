@@ -48,6 +48,7 @@ function verifyTokenAndUser (req,res,next) {
 
 
 module.exports = {
+    verifyToken,
     verifyTokenAndAdmin,
     verifyTokenAndUser
 }
