@@ -22,6 +22,9 @@ app.use("/api/auth",require("./routes/authRouter"))
 
 app.use("/api/users",require("./routes/usersRouter"))
 
+// posts route
+app.use("/api/posts",require("./routes/postsRouter"))
+
 const PORT = process.env.PORT || 9000
 app.listen(PORT,() => {
     console.log(`server is running in ${process.env.Node_ENV} at port ${PORT}`)
