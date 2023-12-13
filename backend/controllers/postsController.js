@@ -7,7 +7,7 @@ const {
   validateEditPost,
   
 } = require("../models/Post");
-const { cloudinaryUploadImage } = require("../utils/cloudinary");
+const { cloudinaryUploadImage, cloudinaryRemoveImage } = require("../utils/cloudinary");
 
 /**
  * @desc add new post
@@ -132,9 +132,26 @@ const  getCount = asyncHandler(async (req,res) => {
 
 
 
+const deletePost = asyncHandler(async (req,res) => {
+  const post = await Post.findById(req.params.id)
+  if (!post) {
+    return res.status(200).json({message : "no posts found"})
+  }
+  
+  if (req.user.isAdmin || req.user.id == post.user.toString()) {
+    Post.findByIdAndDelete(req.params.id)
+    cloudinaryRemoveImage(post.image.publicId)
+    return res.status(200).json({message : "post deleted succefuly"})
+  }
+
+  res.status(403).json({message : "you are not allowed to delete this post"})
+})
+
+
 module.exports = {
     addPost,
     getAllPosts,
     getPostById,
-    getCount
+    getCount,
+    deletePost
 }
