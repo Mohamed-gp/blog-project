@@ -145,6 +145,7 @@ const deletePost = asyncHandler(async (req,res) => {
   }
 
   res.status(403).json({message : "you are not allowed to delete this post"})
+  res.status(403).json({message : "you are not allowed to delete this post"})
 })
 
 
