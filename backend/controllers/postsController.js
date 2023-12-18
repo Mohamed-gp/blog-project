@@ -132,21 +132,34 @@ const  getCount = asyncHandler(async (req,res) => {
 
 
 
+
+/**
+ * @desc delete post
+ * @access privat (only use himself and isAdmin)
+ * @route /api/posts/:id
+ * @method DELETE
+ */
 const deletePost = asyncHandler(async (req,res) => {
   const post = await Post.findById(req.params.id)
   if (!post) {
-    return res.status(200).json({message : "no posts found"})
+    return res.status(404).json({message : "post not found "})
   }
-  
-  if (req.user.isAdmin || req.user.id == post.user.toString()) {
-    Post.findByIdAndDelete(req.params.id)
-    cloudinaryRemoveImage(post.image.publicId)
-    return res.status(200).json({message : "post deleted succefuly"})
+  if (req.user.isAdmin || post.user.toString() == req.user.id) {
+    await Post.findByIdAndDelete(req.params.id)
+    await cloudinaryRemoveImage(post.image.publicId)
   }
-
-  res.status(403).json({message : "you are not allowed to delete this post"})
-  res.status(403).json({message : "you are not allowed to delete this post"})
+  res.status(403).json({message : "you don't have the permission to delete only admin and user himself"})
 })
+
+
+
+/**
+ * @desc update post 
+ * @access private
+ * @method PUT 
+ * @Route /api/posts/:id
+ */
+
 
 
 module.exports = {
