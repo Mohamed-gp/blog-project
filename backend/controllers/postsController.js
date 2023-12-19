@@ -1,13 +1,15 @@
 const asyncHandler = require("express-async-handler");
 const path = require("path");
-const fs = require("fs")
+const fs = require("fs");
 const {
   Post,
   validateCreatePost,
   validateEditPost,
-  
 } = require("../models/Post");
-const { cloudinaryUploadImage, cloudinaryRemoveImage } = require("../utils/cloudinary");
+const {
+  cloudinaryUploadImage,
+  cloudinaryRemoveImage,
+} = require("../utils/cloudinary");
 
 /**
  * @desc add new post
@@ -42,24 +44,22 @@ const addPost = asyncHandler(async (req, res) => {
   // })
   // the difference is this we must do await post.save()
   const post = await Post.create({
-    title : req.body.title,
-    description : req.body.description,
-    category : req.body.category,
+    title: req.body.title,
+    description: req.body.description,
+    category: req.body.category,
     user: req.user.id,
     image: {
-        url : result.secure_url,
-        publicId: result.public_id,
+      url: result.secure_url,
+      publicId: result.public_id,
     },
-  })
+  });
 
   // 5. send response
-  res.status(200).json(post)
+  res.status(200).json(post);
 
   // 6. remove image from the server
-  fs.unlinkSync(imagePath)
+  fs.unlinkSync(imagePath);
 });
-
-
 
 /**
  * @desc get all posts
@@ -67,9 +67,9 @@ const addPost = asyncHandler(async (req, res) => {
  * @method GET
  * @access public
  */
-const getAllPosts = asyncHandler (async (req,res) => {
-  const postsPerPage = 3
-  const {pageNumber, category} = req.query
+const getAllPosts = asyncHandler(async (req, res) => {
+  const postsPerPage = 3;
+  const { pageNumber, category } = req.query;
   // if (category && pageNumber) {
   //   const posts = await Post.find({category : category}).limit(postsPerPage).skip((pageNumber - 1) * postsPerPage)
   //   return res.status(200).json(posts)
@@ -83,26 +83,24 @@ const getAllPosts = asyncHandler (async (req,res) => {
   //   const posts = await Post.find().limit(postsPerPage).skip((pageNumber - 1) * postsPerPage)
   //   return res.status(200).json(posts)
   // }
-  let posts
+  let posts;
   if (pageNumber) {
-    posts = await Post.find().limit(postsPerPage).skip((pageNumber - 1) * postsPerPage).sort({createdAt : -1}).populate("user",["-password"])
-  }else if (category) {
-    posts = await Post.find({category}).sort({createdAt : -1}).populate("user",["-password"])
-    
-  }else {
-    posts = await Post.find().sort({createdAt : -1}).populate("user",["-password"])
+    posts = await Post.find()
+      .limit(postsPerPage)
+      .skip((pageNumber - 1) * postsPerPage)
+      .sort({ createdAt: -1 })
+      .populate("user", ["-password"]);
+  } else if (category) {
+    posts = await Post.find({ category })
+      .sort({ createdAt: -1 })
+      .populate("user", ["-password"]);
+  } else {
+    posts = await Post.find()
+      .sort({ createdAt: -1 })
+      .populate("user", ["-password"]);
   }
-  res.status(200).json(posts)
-
-
-
-
-} )
-
-
-
-
-
+  res.status(200).json(posts);
+});
 
 /**
  * @desc get post by id
@@ -110,14 +108,15 @@ const getAllPosts = asyncHandler (async (req,res) => {
  * @method GET
  * @access public
  */
-const getPostById = asyncHandler(async (req,res) => {
-  const post = await Post.findById(req.params.id).populate("user",["-password"])
+const getPostById = asyncHandler(async (req, res) => {
+  const post = await Post.findById(req.params.id).populate("user", [
+    "-password",
+  ]);
   if (!post) {
-    return res.status(404).json({message : "post not found"})
+    return res.status(404).json({ message: "post not found" });
   }
-  res.status(200).json(post)
-})
-
+  res.status(200).json(post);
+});
 
 /**
  * @desc get post by id
@@ -125,47 +124,72 @@ const getPostById = asyncHandler(async (req,res) => {
  * @method GET
  * @access public
  */
-const  getCount = asyncHandler(async (req,res) => {
-  const count = await Post.find().countDocuments()
-  res.status(200).json(count)
-})
-
-
-
+const getCount = asyncHandler(async (req, res) => {
+  const count = await Post.find().countDocuments();
+  res.status(200).json(count);
+});
 
 /**
  * @desc delete post
- * @access privat (only use himself and isAdmin)
+ * @access private (only user himself and isAdmin)
  * @route /api/posts/:id
  * @method DELETE
  */
-const deletePost = asyncHandler(async (req,res) => {
-  const post = await Post.findById(req.params.id)
+const deletePost = asyncHandler(async (req, res) => {
+  const post = await Post.findById(req.params.id);
   if (!post) {
-    return res.status(404).json({message : "post not found "})
+    return res.status(404).json({ message: "post not found " });
   }
   if (req.user.isAdmin || post.user.toString() == req.user.id) {
-    await Post.findByIdAndDelete(req.params.id)
-    await cloudinaryRemoveImage(post.image.publicId)
+    await Post.findByIdAndDelete(req.params.id);
+    await cloudinaryRemoveImage(post.image.publicId);
   }
-  res.status(403).json({message : "you don't have the permission to delete only admin and user himself"})
-})
-
-
+  res
+    .status(403)
+    .json({
+      message:
+        "you don't have the permission to delete only admin and user himself",
+    });
+});
 
 /**
- * @desc update post 
+ * @desc update post
  * @access private
- * @method PUT 
+ * @method PUT
  * @Route /api/posts/:id
  */
+const editPost = asyncHandler(async (req, res) => {
+  const { error } = validateEditPost(req.body);
+  if (error) {
+    return res.status(400).json({ message: error.details[0].message });
+  }
+  const post = await Post.findById(req.params.id);
+  if (!post) {
+    return res.status(404).json({ message: "post not found" });
+  }
+  if (req.user.id !== post.user.toString()) {
+    return res.status(403).json({message : "access denied you don't have the permission"})
+  }
+  const updatedPost = await Post.findByIdAndUpdate(
+    req.params.id,
+    {
+      $set: {
+        title: req.body.title,
+        description: req.body.description,
+      },
+      category : req.body.category
+    },
+    { new: true }
+  ).populate("user",["-password"]);
 
-
+  res.status(200).json(updatedPost)
+});
 
 module.exports = {
-    addPost,
-    getAllPosts,
-    getPostById,
-    getCount,
-    deletePost
-}
+  addPost,
+  getAllPosts,
+  getPostById,
+  getCount,
+  deletePost,
+  editPost
+};
