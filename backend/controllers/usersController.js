@@ -140,20 +140,8 @@ const deleteUser = asyncHandler(async (req,res) => {
 
 })
 
-// counterController.js
-let counterValue = 0;
 
-const incrementCounter = (req, res) => {
-  counterValue++;
-  res.json({ counter: counterValue });
-};
 
-const decrementCounter = (req, res) => {
-  counterValue--;
-  res.json({ counter: counterValue });
-};
-
-module.exports = { incrementCounter, decrementCounter };
 
 
 module.exports = {
