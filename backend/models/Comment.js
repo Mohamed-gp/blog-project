@@ -40,7 +40,7 @@ function validateCreateComment (obj) {
 
 function editComment (obj) {
     const Schema = joi.object({
-        text : joi.string().required()
+        text : joi.string().required().label("any")
     })
 
 
