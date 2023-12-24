@@ -26,6 +26,8 @@ app.use("/api/users",require("./routes/usersRouter"))
 app.use("/api/posts",require("./routes/postsRouter"))
 // comments route
 app.use("/api/comments",require("./routes/commentsRouter"))
+// category route
+app.use("/api/categories",require("./routes/categoryRouter"))
 
 const PORT = process.env.PORT || 9000
 app.listen(PORT,() => {

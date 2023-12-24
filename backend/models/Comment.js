@@ -38,7 +38,7 @@ function validateCreateComment (obj) {
     return Schema.validate(obj)
 }
 
-function editComment (obj) {
+function validateEditComment (obj) {
     const Schema = joi.object({
         text : joi.string().required().label("any")
     })
@@ -53,5 +53,5 @@ function editComment (obj) {
 module.exports = {
     Comment,
     validateCreateComment,
-    editComment
+    validateEditComment
 }

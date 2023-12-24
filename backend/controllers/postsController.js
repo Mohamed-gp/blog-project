@@ -10,6 +10,7 @@ const {
   cloudinaryUploadImage,
   cloudinaryRemoveImage,
 } = require("../utils/cloudinary");
+const { Comment } = require("../models/Comment");
 
 /**
  * @desc add new post
@@ -109,9 +110,9 @@ const getAllPosts = asyncHandler(async (req, res) => {
  * @access public
  */
 const getPostById = asyncHandler(async (req, res) => {
-  const post = await Post.findById(req.params.id).populate("user", [
-    "-password",
-  ]);
+  const post = await Post.findById(req.params.id)
+    .populate("user", ["-password"])
+    .populate("Comment.deleteMany({postId : post._id})s");
   if (!post) {
     return res.status(404).json({ message: "post not found" });
   }
@@ -144,6 +145,7 @@ const deletePost = asyncHandler(async (req, res) => {
     await Post.findByIdAndDelete(req.params.id);
     await cloudinaryRemoveImage(post.image.publicId);
   }
+  await Comment.deleteMany({postId : post._id})
   res.status(403).json({
     message:
       "you don't have the permission to delete only admin and user himself",
@@ -232,31 +234,40 @@ const updatePostImage = asyncHandler(async (req, res) => {
 
 const toggleLike = asyncHandler(async (req, res) => {
   // get the post id and change the name of it from id to postId
-  const { id: postId } = req.params.id
-  let post = await Post.findById(postId)
+  const { id: postId } = req.params.id;
+  let post = await Post.findById(postId);
   if (!post) {
-    return res.status(404).json({message : "no post found"})
+    return res.status(404).json({ message: "no post found" });
   }
 
-  const alreadyLiked = post.likes.find(user => user.toString() == req.user.id)
+  const alreadyLiked = post.likes.find(
+    (user) => user.toString() == req.user.id
+  );
   if (alreadyLiked) {
-    post = await Post.findByIdAndUpdate(postId,{
-      // work on arrays it used to remove values
-      $pull : {
-        likes : req.user.id
-      }
-    },{new : true})
-  }else{
-    post = await Post.findByIdAndUpdate(postId,{
-      // work on arrays it used to remove values
-      $push : {
-        likes : req.user.id
-      }
-    },{new : true})
+    post = await Post.findByIdAndUpdate(
+      postId,
+      {
+        // work on arrays it used to remove values
+        $pull: {
+          likes: req.user.id,
+        },
+      },
+      { new: true }
+    );
+  } else {
+    post = await Post.findByIdAndUpdate(
+      postId,
+      {
+        // work on arrays it used to remove values
+        $push: {
+          likes: req.user.id,
+        },
+      },
+      { new: true }
+    );
   }
 
-
-  res.status(200).json(post)
+  res.status(200).json(post);
 });
 
 module.exports = {
@@ -267,5 +278,5 @@ module.exports = {
   deletePost,
   editPost,
   updatePostImage,
-  toggleLike
+  toggleLike,
 };

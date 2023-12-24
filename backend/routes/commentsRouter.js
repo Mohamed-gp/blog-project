@@ -2,6 +2,7 @@ const {
   createComment,
   getAllComments,
   deleteComment,
+  updateComment,
 } = require("../controllers/commentsController");
 const {
   verifyToken,
@@ -20,5 +21,6 @@ router
 
 
 router.route("/:id").delete(validateObjectId,verifyToken,deleteComment)
+                    .put(validateObjectId,verifyToken,updateComment)
 
 module.exports = router;
