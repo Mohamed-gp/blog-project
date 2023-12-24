@@ -1,6 +1,7 @@
 require("dotenv").config()
 const express = require("express")
 const connectToDB = require("./config/connectDB")
+const { notFound, errorHandler } = require("./middlewares/error")
 
 // connection to DB
 connectToDB()
@@ -28,6 +29,11 @@ app.use("/api/posts",require("./routes/postsRouter"))
 app.use("/api/comments",require("./routes/commentsRouter"))
 // category route
 app.use("/api/categories",require("./routes/categoryRouter"))
+
+
+// error handler middlewares
+app.use(notFound)
+app.use(errorHandler)
 
 const PORT = process.env.PORT || 9000
 app.listen(PORT,() => {
