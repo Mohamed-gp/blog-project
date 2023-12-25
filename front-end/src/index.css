@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+  
+  * {
+
+    font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+  }
+  
+
+
+  
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: none;
+  }
+  
+  /* Some Global Classes For icons */
+  /* .bi-pencil-square {
+    color: var(--green-sea-color);
+    margin-right: 15px;
+  }
+  
+  .bi-trash-fill {
+    color: var(--red-color);
+  } */
+  
+  /* Scrollbar Classes For Google Chrome */
+  html::-webkit-scrollbar {
+    width: 12px;
+  }
+  
+  html::-webkit-scrollbar-track {
+    background-color: rgb(187, 179, 179);
+  }
+  
+  html::-webkit-scrollbar-thumb {
+    background-color: var(--dark-color);
+    border-radius: 15px;
+  }
+  
+
+/* header */
+
+@media (min-width: 1024px) {
+  .menu-responsive{
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+
+    
+  }
+}
+/* closed menu */
+@media (max-width: 1024px) {
+  .closed{
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  }
+  .open{
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+
+
+  }
+}
