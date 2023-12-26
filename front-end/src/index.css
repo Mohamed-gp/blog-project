@@ -38,7 +38,7 @@
   }
   
   html::-webkit-scrollbar-thumb {
-    background-color: var(--dark-color);
+    background-color: #292b2c;
     border-radius: 15px;
   }
   
@@ -62,4 +62,32 @@
 
 
   }
+}
+/* 
+.serbas {
+  background-image: url("../src/assets/images/home-bg.jpg");
+} */
+
+.category-link:hover::before{
+  background-color: white;
+  transition-duration: 1s;
+}
+.category-link::before {
+  content: '';
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    background-color: black;
 }

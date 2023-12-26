@@ -22,7 +22,7 @@ export default {
         "pumpkin-color": "#d35400",
         "red-color": "#d9534f",
         "white-color": "#fff",
-      }
+      },
     },
   },
   plugins: [],
