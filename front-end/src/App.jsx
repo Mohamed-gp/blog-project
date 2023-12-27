@@ -7,6 +7,7 @@ import PostsPage from './pages/posts-page/PostsPage'
 import AdminDashboard from './pages/admin/AdminDashboard'
 import CreatePost from './pages/create-post/CreatePost'
 import Footer from './components/footer/Footer'
+import PostDetails from './pages/post-details/PostDetails'
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
           <Route path='/register' element={<Register/>} />
           <Route path='/posts' element={<PostsPage/>} />
           <Route path='/posts/create-post' element={<CreatePost/>} />
+          <Route path='/posts/details/:id' element={<PostDetails/>} />
           <Route path='admin-dashboard' element={<AdminDashboard />} />
         </Routes>
         <Footer/>

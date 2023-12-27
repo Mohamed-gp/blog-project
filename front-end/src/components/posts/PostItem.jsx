@@ -44,7 +44,7 @@ const PostItem = ({ post }) => {
           loremque tenetur? Unde doloribus adipisci
           accusantium earum.
         </p>
-        <Link className="text-blue-color" to={`/posts/details${post._id}`}>
+        <Link className="text-blue-color" to={`/posts/details/${post._id}`}>
           Read More...
         </Link>
       </div>
