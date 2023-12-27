@@ -6,6 +6,7 @@ import Register from './pages/forms/Register'
 import PostsPage from './pages/posts-page/PostsPage'
 import AdminDashboard from './pages/admin/AdminDashboard'
 import CreatePost from './pages/create-post/CreatePost'
+import Footer from './components/footer/Footer'
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
           <Route path='/posts/create-post' element={<CreatePost/>} />
           <Route path='admin-dashboard' element={<AdminDashboard />} />
         </Routes>
+        <Footer/>
       </BrowserRouter>
     </>
   )

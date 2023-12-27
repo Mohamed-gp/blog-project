@@ -15,10 +15,10 @@ const Home = () => {
         <Posts posts={posts.slice(0,2)}/>
         <SideBarPosts categories={categories}/>
       </div>
-    </div>
-      <div className="flex justify-center py-4 font-bold text-white bg-[#292b2c] see-all-postsp">
+      <div className="flex mb-6 justify-center py-4 font-bold text-white bg-[#292b2c] see-all-postsp">
         <Link to="/posts" className="w-full h-full text-center">See All Posts</Link>
       </div>
+    </div>
     </>
   )
 }

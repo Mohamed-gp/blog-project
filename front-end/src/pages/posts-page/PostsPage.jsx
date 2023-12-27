@@ -8,10 +8,13 @@ import { categories, posts } from "../../dummyData"
 
 
 const PostsPage = () => {
-  const [postPerPage,setpostPerPage] = useState(2)
-  const [currentPage,setcurrentPage] = useState(1)
-  let firstIndex = (currentPage - 1 )  * postPerPage 
-  let lastIndex = currentPage   * postPerPage 
+  useEffect(() => {
+    window.scrollTo(0,0)
+  })
+  const [postPerPage, setpostPerPage] = useState(2)
+  const [currentPage, setcurrentPage] = useState(1)
+  let firstIndex = (currentPage - 1) * postPerPage
+  let lastIndex = currentPage * postPerPage
   const postsPagesNumber = posts.length / postPerPage
 
 
@@ -21,12 +24,10 @@ const PostsPage = () => {
       <div className="container px-6 pt-6">
         <Title title="Posts" />
         <div className="flex flex-col gap-6 content lg:flex-row">
-          <div className="flex flex-col  flex-wrap items-center justify-center flex-[8]">
-            <Posts posts={posts.slice(firstIndex,lastIndex)} />
-            <Pagination currentPage={currentPage} setcurrentPage={setcurrentPage} postPerPage={postsPagesNumber}/>
-          </div>
+          <Posts posts={posts.slice(firstIndex, lastIndex)} />
           <SideBarPosts categories={categories} />
         </div>
+        <Pagination currentPage={currentPage} setcurrentPage={setcurrentPage} postPerPage={postsPagesNumber} />
       </div>
 
 
