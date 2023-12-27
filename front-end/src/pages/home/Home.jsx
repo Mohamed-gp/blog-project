@@ -12,7 +12,7 @@ const Home = () => {
     <div className="container px-6 pt-6">
       <Title title="Latest Posts" />
       <div className="flex flex-col gap-6 content lg:flex-row">
-        <Posts posts={posts}/>
+        <Posts posts={posts.slice(0,2)}/>
         <SideBarPosts categories={categories}/>
       </div>
     </div>
