@@ -23,7 +23,7 @@ const PostItem = ({ post }) => {
           <h4>{post.title}</h4>
           <Link to={`/posts/categories/${post.category}`} className="px-3 py-1 text-lg font-normal text-white rounded-lg bg-pumpkin-color ">{post.category}</Link>
         </div>
-        <p className="leading-relaxed post-description line-clamp-2">
+        <p className="my-4 leading-relaxed post-description line-clamp-2">
           {post.description}
           Lorem ipsum dolor sit amet consectetu
           r adipisicing elit. Velit natus ut tota
@@ -44,7 +44,7 @@ const PostItem = ({ post }) => {
           loremque tenetur? Unde doloribus adipisci
           accusantium earum.
         </p>
-        <Link className="text-blue-color" to={`/posts/details/${post._id}`}>
+        <Link className="w-full py-2 font-bold text-center text-white bg-green-color rounded-xl" to={`/posts/details/${post._id}`}>
           Read More...
         </Link>
       </div>

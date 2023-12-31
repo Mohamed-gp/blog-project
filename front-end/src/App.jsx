@@ -9,22 +9,25 @@ import CreatePost from './pages/create-post/CreatePost'
 import Footer from './components/footer/Footer'
 import PostDetails from './pages/post-details/PostDetails'
 
+
+
 function App() {
 
   return (
     <>
       <BrowserRouter>
         <Header />
+        
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/login' element={<Login/>} />
-          <Route path='/register' element={<Register/>} />
-          <Route path='/posts' element={<PostsPage/>} />
-          <Route path='/posts/create-post' element={<CreatePost/>} />
-          <Route path='/posts/details/:id' element={<PostDetails/>} />
-          <Route path='admin-dashboard' element={<AdminDashboard />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+          <Route path='/posts' element={<PostsPage />} />
+          <Route path='/posts/create-post' element={<CreatePost />} />
+          <Route path='/posts/details/:id' element={<PostDetails />} />
+          <Route path='/admin-dashboard' element={<AdminDashboard />} />
         </Routes>
-        <Footer/>
+        <Footer />
       </BrowserRouter>
     </>
   )

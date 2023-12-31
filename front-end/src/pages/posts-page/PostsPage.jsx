@@ -27,7 +27,7 @@ const PostsPage = () => {
           <Posts posts={posts.slice(firstIndex, lastIndex)} />
           <SideBarPosts categories={categories} />
         </div>
-        <Pagination currentPage={currentPage} setcurrentPage={setcurrentPage} postPerPage={postsPagesNumber} />
+        <Pagination currentPage={currentPage} setcurrentPage={setcurrentPage} postsPagesNumber={postsPagesNumber} />
       </div>
 
 
