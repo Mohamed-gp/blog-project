@@ -9,11 +9,12 @@ const SideBarPosts = ({ categories }) => {
       </div>
       <div className="flex flex-col items-center gap-2 my-4">
         {categories.map(category => (
-          <Link style={{ clipPath: "polygon(9% 0, 100% 0, 100% 100%, 9% 100%, 0 50%)"}} className="relative w-full py-2 text-lg font-bold text-center capitalize duration-500 category-link bg-gray-color hover:bg-pumpkin-color hover:text-white " key={category._id} to={`/posts/categories/${category.title}`}>
-        {category.title}
-      </Link>
+          <Link style={{ clipPath: "polygon(9% 0, 100% 0, 100% 100%, 9% 100%, 0 50%)" }} className="relative w-full py-2 text-lg font-bold text-center capitalize duration-500 category-link bg-gray-color hover:bg-pumpkin-color hover:text-white " key={category._id}
+            to={`/posts/categories/${category.title}`}>
+            {category.title}
+          </Link>
         ))}
-    </div>
+      </div>
     </div >
   )
 }

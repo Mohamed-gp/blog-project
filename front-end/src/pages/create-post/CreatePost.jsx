@@ -33,7 +33,7 @@ const CreatePost = () => {
         <div className="text-center">
           <Title title="Create New Post" />
         </div>
-        <form onSubmit={formOnSubmit} action="" className="flex gap-2 flex-col lg:w-[400px] items-center mx-auto">
+        <form onSubmit={formOnSubmit} action="" className="flex gap-2 flex-col lg:w-[450px] items-center mx-auto">
           <input value={postTitle} type="text" className="w-full h-10 pl-4 rounded-xl" placeholder="Post Title" onChange={(e) => {setpostTitle(e.target.value)}}/>
           <select value={postCategory} name="" id="" className="w-full h-10 pl-4 rounded-xl" onChange={(e) => {setpostCategory(e.target.value)}}>
             <option disabled >Select A Category</option>
