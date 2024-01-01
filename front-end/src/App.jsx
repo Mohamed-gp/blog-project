@@ -9,6 +9,7 @@ import CreatePost from './pages/create-post/CreatePost'
 import Footer from './components/footer/Footer'
 import PostDetails from './pages/post-details/PostDetails'
 import Category from './pages/category/Category'
+import Profile from './pages/profile/Profile'
 
 
 
@@ -30,6 +31,7 @@ function App() {
             <Route path='categories/:category' element={<Category />} />
           </Route>
           <Route path='/admin-dashboard' element={<AdminDashboard />} />
+          <Route path='/profile' element={<Profile />} />
         </Routes>
         <Footer />
       </BrowserRouter>

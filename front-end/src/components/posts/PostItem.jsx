@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 const PostItem = ({ post }) => {
   return (
     <div className="flex flex-col w-full p-4 mb-8 bg-white rounded-lg post-item">
-      <div className="object-contain mb-2 overflow-hidden w-[45%] mx-auto rounded-xl ">
+      <div className="object-contain mb-2 overflow-hidden w-[65%] mx-auto rounded-xl ">
         <img src={`/assets${post.image}`} alt={post.title} className="mx-auto" />
       </div>
       <div className="flex flex-col gap-1 post-info">

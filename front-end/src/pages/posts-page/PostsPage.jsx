@@ -20,28 +20,23 @@ const PostsPage = () => {
 
 
   return (
-    <>
-      <div className="container px-6 pt-6">
-        <Title title="Posts" />
-        <div className="hidden lg:block">
-          <div className="flex-col gap-6 lg:flex content lg:flex-row">
-            <Posts posts={posts.slice(firstIndex, lastIndex)} />
-            <SideBarPosts categories={categories} />
-          </div>
-          <Pagination currentPage={currentPage} setcurrentPage={setcurrentPage} postsPagesNumber={postsPagesNumber} />
-        </div>
-        <div className="lg:hidden">
-          <div className="flex flex-col gap-6 ">
-            <Posts posts={posts.slice(firstIndex, lastIndex)} />
-            <Pagination currentPage={currentPage} setcurrentPage={setcurrentPage} postsPagesNumber={postsPagesNumber} />
-          </div>
+    <div className="container px-6 pt-6">
+      <Title title="Posts" />
+      <div className="hidden lg:block">
+        <div className="flex-col gap-6 lg:flex content lg:flex-row">
+          <Posts posts={posts.slice(firstIndex, lastIndex)} />
           <SideBarPosts categories={categories} />
         </div>
+        <Pagination currentPage={currentPage} setcurrentPage={setcurrentPage} postsPagesNumber={postsPagesNumber} />
       </div>
-
-
-
-    </>
+      <div className="lg:hidden">
+        <div className="flex flex-col gap-6 ">
+          <Posts posts={posts.slice(firstIndex, lastIndex)} />
+          <Pagination currentPage={currentPage} setcurrentPage={setcurrentPage} postsPagesNumber={postsPagesNumber} />
+        </div>
+        <SideBarPosts categories={categories} />
+      </div>
+    </div>
   )
 }
 export default PostsPage
