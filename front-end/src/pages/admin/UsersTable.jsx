@@ -1,4 +1,3 @@
-import AdminMain from "./AdminMain"
 import AdminSideBar from "./AdminSideBar"
 
 const UsersTable = () => {
