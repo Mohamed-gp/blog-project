@@ -10,6 +10,10 @@ import Footer from './components/footer/Footer'
 import PostDetails from './pages/post-details/PostDetails'
 import Category from './pages/category/Category'
 import Profile from './pages/profile/Profile'
+import UsersTable from './pages/admin/UsersTable'
+import CommentsTable from './pages/admin/CommentsTable'
+import PostsTable from './pages/admin/PostsTable'
+import CategoriesTable from './pages/admin/CategoriesTable'
 
 
 
@@ -30,7 +34,13 @@ function App() {
             <Route path='details/:id' element={<PostDetails />} />
             <Route path='categories/:category' element={<Category />} />
           </Route>
-          <Route path='/admin-dashboard' element={<AdminDashboard />} />
+          <Route path='/admin-dashboard'>
+            <Route index element={<AdminDashboard />} />
+            <Route path='users-table' element={<UsersTable />} />
+            <Route path='comments-table' element={<CommentsTable />} />
+            <Route path='posts-table' element={<PostsTable />} />
+            <Route path='categories-table' element={<CategoriesTable />} />
+          </Route>
           <Route path='/profile' element={<Profile />} />
         </Routes>
         <Footer />
