@@ -30,15 +30,20 @@
   } */
   
   /* Scrollbar Classes For Google Chrome */
-  html::-webkit-scrollbar {
+  ::-webkit-scrollbar {
     width: 12px;
   }
   
-  html::-webkit-scrollbar-track {
+  ::-webkit-scrollbar-track {
     background-color: rgb(187, 179, 179);
-  }
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+}
   
-  html::-webkit-scrollbar-thumb {
+  ::-webkit-scrollbar-thumb {
     background-color: #292b2c;
     border-radius: 15px;
   }
@@ -68,7 +73,9 @@
 .serbas {
   background-image: url("../src/assets/images/home-bg.jpg");
 } */
-
+nav{
+  z-index: 100;
+}
 .category-link:hover::before{
   background-color: white;
   transition-duration: 1s;
@@ -91,4 +98,31 @@
     -ms-border-radius: 50%;
     -o-border-radius: 50%;
     background-color: black;
+}
+
+td,th{
+  border: 2px solid #1d2d3d;
+  width: 260px;
+}
+table thead tr {
+  background-color: #868686;
+}
+tr:nth-child(even) {
+  background-color: #c6c6c6;
+}
+tr:nth-child(even):hover {
+  background-color: gray;
+  transition-duration: .5s;
+
+}
+tr{
+  color: rgb(19, 19, 19);
+}
+table div {
+  font-weight: bold;
+}
+
+.admin-link.active {
+  background-color: #a0a0a0;
+  color: white;
 }

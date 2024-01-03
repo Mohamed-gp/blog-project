@@ -14,6 +14,9 @@ import UsersTable from './pages/admin/UsersTable'
 import CommentsTable from './pages/admin/CommentsTable'
 import PostsTable from './pages/admin/PostsTable'
 import CategoriesTable from './pages/admin/CategoriesTable'
+import ForgetPassword from './pages/forms/ForgetPassword'
+import ResetPassword from './pages/forms/ResetPassword'
+import NotFound from './pages/not-found/NotFound'
 
 
 
@@ -28,6 +31,8 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
+          <Route path='/forget-password' element={<ForgetPassword />} />
+          <Route path='/reset-password' element={<ResetPassword />} />
           <Route path='/posts'>
             <Route index element={<PostsPage />} />
             <Route path='create-post' element={<CreatePost />} />
@@ -42,6 +47,7 @@ function App() {
             <Route path='categories-table' element={<CategoriesTable />} />
           </Route>
           <Route path='/profile' element={<Profile />} />
+          <Route path='*' element={<NotFound />} />
         </Routes>
         <Footer />
       </BrowserRouter>
