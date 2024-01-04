@@ -1,6 +1,7 @@
 require("dotenv").config()
 const express = require("express")
 const connectToDB = require("./config/connectDB")
+const cors = require("cors")
 const { notFound, errorHandler } = require("./middlewares/error")
 
 // connection to DB
@@ -13,6 +14,10 @@ const app = express()
 app.use(express.json())
 
 
+// cors before route because front end is another domain he need to acces it 
+app.use(cors({
+    origin : "http://localhost:5173/"
+}))
 
 // routes 
 
