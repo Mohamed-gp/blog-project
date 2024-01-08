@@ -1,47 +1,21 @@
-import { createSlice } from "@reduxjs/toolkit";
+// src/reducers/myReducer.js
 
-const profileSlice = createSlice({
-  name: "profile",
+import { createSlice } from '@reduxjs/toolkit';
+
+const myReducer = createSlice({
+  name: 'myReducer',
   initialState: {
-    profile: null,
-    loading: false,
-    isProfileDeleted: false,
-    usersCount:null,
-    profiles: [],
+    value: 0,
   },
   reducers: {
-    setProfile(state, action) {
-      state.profile = action.payload;
+    increment: state => {
+      state.value += 1;
     },
-    setProfilePhoto(state, action) {
-      state.profile.profilePhoto = action.payload;
+    decrement: state => {
+      state.value -= 1;
     },
-    updateProfile(state,action) {
-      state.profile = action.payload;
-    },
-    setLoading(state) {
-      state.loading = true;
-    },
-    clearLoading(state) {
-      state.loading = false;
-    },
-    setIsProfileDeleted(state) {
-      state.isProfileDeleted = true;
-      state.loading = false;
-    },
-    clearIsProfileDeleted(state) {
-      state.isProfileDeleted = false;
-    },
-    setUserCount(state,action) {
-      state.usersCount = action.payload;
-    },
-    setProfiles(state,action) {
-      state.profiles = action.payload;
-    }
   },
 });
-
-const profileReducer = profileSlice.reducer;
-const profileActions = profileSlice.actions;
-
-export { profileActions, profileReducer };
+console.log(myReducer.reducer)
+export const { increment, decrement } = myReducer.actions;
+export default myReducer.reducer;

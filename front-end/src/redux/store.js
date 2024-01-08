@@ -1,18 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {configureStore} from "@reduxjs/toolkit"
 
-const passwordSlice = createSlice({
-   name: "password",
-   initialState: {
-     isError: false,
-   },
-   reducers: {
-      setError(state) {
-        state.isError = true;
-      },
-   }
-});
+export const store = configureStore({
+  reducer : {
 
-const passwordReducer = passwordSlice.reducer;
-const passwordActions = passwordSlice.actions;
-
-export { passwordActions, passwordReducer }
+  }
+})
