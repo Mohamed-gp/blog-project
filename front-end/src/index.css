@@ -126,3 +126,19 @@ table div {
   background-color: #a0a0a0;
   color: white;
 }
+
+.drop-down-profile {
+  clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  animation-name: drop-down-profile-animate;
+  animation-fill-mode: forwards;
+  animation-duration: 0.5s;
+}
+
+@keyframes drop-down-profile-animate {
+  0%{
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  }
+  100% {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+  }
+}

@@ -15,9 +15,7 @@ app.use(express.json())
 
 
 // cors before route because front end is another domain he need to acces it 
-app.use(cors({
-    origin : "http://localhost:5173/"
-}))
+app.use(cors())
 
 // routes 
 

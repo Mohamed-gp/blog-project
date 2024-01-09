@@ -46,7 +46,7 @@ function App() {
             <Route path='posts-table' element={<PostsTable />} />
             <Route path='categories-table' element={<CategoriesTable />} />
           </Route>
-          <Route path='/profile' element={<Profile />} />
+          <Route path='/profile/:id' element={<Profile />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
         <Footer />

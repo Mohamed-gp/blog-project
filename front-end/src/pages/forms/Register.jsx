@@ -25,7 +25,7 @@ const Register = () => {
       <div className="text-center">
         <Title title="Register" />
       </div>
-      <form onSubmit={formOnSubmit} action="" className="flex gap-2 flex-col lg:w-[450px] items-center mx-auto">
+      <form onSubmit={formOnSubmit} action="" className="flex gap-2 flex-col lg:w-[450px] w-[300px] items-center mx-auto">
 
         <label  className="w-full font-bold" htmlFor="username">Username : </label>
         <input value={username} type="text" id="username" className="w-full h-10 pl-4 rounded-xl" placeholder="Your username" onChange={(e) => { setusername(e.target.value) }} />

@@ -1,21 +1,21 @@
-// src/reducers/myReducer.js
+import { createSlice } from "@reduxjs/toolkit";
 
-import { createSlice } from '@reduxjs/toolkit';
-
-const myReducer = createSlice({
-  name: 'myReducer',
+const authSlice = createSlice({
+  name: "auth",
   initialState: {
-    value: 0,
+    user: localStorage.getItem("userInfo")
+      ? JSON.parse(localStorage.getItem("userInfo"))
+      : null,
   },
   reducers: {
-    increment: state => {
-      state.value += 1;
-    },
-    decrement: state => {
-      state.value -= 1;
+    login(state, action) {
+      // action.payload we get when we call login({} :payload)
+      state.user = action.payload;
     },
   },
 });
-console.log(myReducer.reducer)
-export const { increment, decrement } = myReducer.actions;
-export default myReducer.reducer;
+
+const authReducer = authSlice.reducer;
+const authActions = authSlice.actions;
+
+export { authActions, authReducer };

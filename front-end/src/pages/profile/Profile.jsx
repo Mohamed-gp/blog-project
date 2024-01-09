@@ -5,10 +5,12 @@ import { useState } from "react"
 import { toast } from "react-toastify"
 import Swal from "sweetalert2"
 import UpdateProfileModel from "./UpdateProfileModel"
+import { useParams } from "react-router-dom"
 
 const Profile = () => {
     const [isOpenModel,setisOpenModel] = useState(false)
     const [file, setfile] = useState(null)
+    const {id} = useParams()
     const formSubmitHandler = (e) => {
         e.preventDefault()
         if (!file) {

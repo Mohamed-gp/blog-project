@@ -2,8 +2,10 @@ import { useState } from "react"
 import { toast } from "react-toastify"
 import Title from "../../components/title/Title"
 import { Link } from "react-router-dom"
-
+import { useDispatch } from "react-redux"
+import { loginUser } from "../../redux/apiCalls/authApiCall"
 const Login = () => {
+  const dispatch = useDispatch()
   const [email, setemail] = useState("")
   const [password, setpassword] = useState("")
   const formOnSubmit = (e) => {
@@ -15,14 +17,14 @@ const Login = () => {
     if (password.trim() === "") {
       return toast.error("password is required")
     }
-    return toast.success("Account verified Welcome")
+    dispatch(loginUser({email,password}))
   }
   return (
     <div className="px-6 contianer" style={{ height: "calc(100vh - (72px +  48px))" ,display : "flex",justifyContent :"center",flexDirection : "column"}}>
       <div className="text-center">
         <Title title="Login" />
       </div>
-      <form onSubmit={formOnSubmit} action="" className="flex gap-2 flex-col lg:w-[450px] items-center mx-auto">
+      <form onSubmit={formOnSubmit} action="" className="flex gap-2 flex-col lg:w-[450px] w-[300px] items-center mx-auto">
         <label className="w-full font-bold" htmlFor="email">Email : </label>
         <input value={email} id="email" type="text" className="w-full h-10 pl-4 rounded-xl" placeholder="Your email" onChange={(e) => { setemail(e.target.value) }} />
         <label className="w-full font-bold" htmlFor="password">Password : </label>
