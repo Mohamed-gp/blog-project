@@ -38,3 +38,10 @@ export function loginUser(user) {
         }
     };
 }
+
+export function logoutUser (){
+    return (dispatch,getstate) => {
+        dispatch(authActions.logout())
+        localStorage.removeItem("userInfo")
+    }
+}

@@ -1,10 +1,13 @@
 import { BsArrow90DegDown, BsArrowBarDown, BsArrowDown, BsArrowDownLeft, BsArrowRight, BsDoorOpenFill, BsPersonAdd, BsPersonFill, BsTriangle, BsTriangleFill } from "react-icons/bs"
 import { Link } from "react-router-dom"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useState } from "react"
+import { toast } from "react-toastify"
+import { logoutUser } from "../../redux/apiCalls/authApiCall"
 
 const HeaderRight = () => {
   const user = useSelector(state => state.auth.user)
+  const dispatch = useDispatch()
   const [dropDownOpen, setdropDownOpen] = useState(false)
   // const { user } = useSelector(state => state.auth)
   return (
@@ -33,7 +36,7 @@ const HeaderRight = () => {
                   <BsPersonFill />
                   <p>Account</p>
                 </Link>
-                <div onClick={() => {setdropDownOpen(false)}} className="flex items-center gap-2 duration-500 cursor-pointer hover:text-yellow-300">
+                <div onClick={() => {setdropDownOpen(false);dispatch(logoutUser())}} className="flex items-center gap-2 duration-500 cursor-pointer hover:text-yellow-300">
                   <BsDoorOpenFill />
                   <p>Log Out</p>
                 </div>

@@ -1,5 +1,5 @@
 import Header from './components/header/Header'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import Home from './pages/home/Home'
 import Login from './pages/forms/Login'
 import Register from './pages/forms/Register'
@@ -17,11 +17,12 @@ import CategoriesTable from './pages/admin/CategoriesTable'
 import ForgetPassword from './pages/forms/ForgetPassword'
 import ResetPassword from './pages/forms/ResetPassword'
 import NotFound from './pages/not-found/NotFound'
+import { useSelector } from 'react-redux'
 
 
 
 function App() {
-
+  const user = useSelector(state => state.auth.user)
   return (
     <>
       <BrowserRouter>
@@ -29,22 +30,22 @@ function App() {
 
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Register />} />
+          <Route path='/login' element={user ? <Navigate to="/"/> : <Login />} />
+          <Route path='/register' element={user ? <Navigate to="/"/> : <Register />} />
           <Route path='/forget-password' element={<ForgetPassword />} />
           <Route path='/reset-password' element={<ResetPassword />} />
           <Route path='/posts'>
             <Route index element={<PostsPage />} />
-            <Route path='create-post' element={<CreatePost />} />
+            <Route path='create-post' element={!user ? <Navigate to="/"/> : <CreatePost />} />
             <Route path='details/:id' element={<PostDetails />} />
             <Route path='categories/:category' element={<Category />} />
           </Route>
           <Route path='/admin-dashboard'>
-            <Route index element={<AdminDashboard />} />
-            <Route path='users-table' element={<UsersTable />} />
-            <Route path='comments-table' element={<CommentsTable />} />
-            <Route path='posts-table' element={<PostsTable />} />
-            <Route path='categories-table' element={<CategoriesTable />} />
+            <Route index element={!user?.isAdmin ? <Navigate to="/"/> : <UsersTable />} />
+            <Route path='users-table' element={!user?.isAdmin ? <Navigate to="/"/> : <UsersTable />} />
+            <Route path='comments-table' element={!user?.isAdmin ? <Navigate to="/"/> : <CommentsTable />} />
+            <Route path='posts-table' element={!user?.isAdmin ? <Navigate to="/"/> : <PostsTable />} />
+            <Route path='categories-table' element={!user?.isAdmin ? <Navigate to="/"/> : <CategoriesTable />} />
           </Route>
           <Route path='/profile/:id' element={<Profile />} />
           <Route path='*' element={<NotFound />} />
