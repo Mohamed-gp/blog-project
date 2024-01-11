@@ -10,10 +10,12 @@ const HeaderRight = () => {
   const dispatch = useDispatch()
   const [dropDownOpen, setdropDownOpen] = useState(false)
   // const { user } = useSelector(state => state.auth)
+  console.log(user)
   return (
 
     <div className="flex items-center gap-2 font-bold right-header lg:w-[240px] text-sm sm:text-lg">
       {user ?
+      (
         <>
           <div className="relative flex items-center gap-1 lg:gap-2">
             <div className="w-[15px] flex justify-center ">
@@ -43,7 +45,7 @@ const HeaderRight = () => {
               </div>
             }
           </div>
-        </> :
+        </> ):
         (
           <>
             <Link to="/login" className="flex items-center gap-1 px-3 py-1 bg-white border-2 border-black border-solid rounded-lg cursor-pointer text-blue-color">

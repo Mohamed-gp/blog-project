@@ -29,7 +29,6 @@ export function loginUser(user) {
             // const data = await response.json();
             // Dispatch the login action with the data received from the server
             dispatch(authActions.login(response.data));
-            console.log(response.data)
             localStorage.setItem("userInfo",JSON.stringify(response.data))
         } catch (error) {
             // Log any errors that occur during the API call
@@ -44,4 +43,19 @@ export function logoutUser (){
         dispatch(authActions.logout())
         localStorage.removeItem("userInfo")
     }
+}
+
+export function registerUser (user){
+    return async (dispatch, getState) => { // get state takes the state from the store
+        try {
+            const response = await request.post("/api/auth/signup",user)
+            dispatch(authActions.register(response.data.message));
+            console.log(response.data.user)
+            localStorage.setItem("userInfo",JSON.stringify(response.data.user))
+        } catch (error) {
+            // Log any errors that occur during the API call
+            toast.error(error.response.data.message)
+            console.log(error.response.data.message);
+        }
+    };
 }
