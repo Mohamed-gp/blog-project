@@ -6,7 +6,7 @@ const authSlice = createSlice({
     user: localStorage.getItem("userInfo")
       ? JSON.parse(localStorage.getItem("userInfo"))
       : null,
-    registerUser : !localStorage.getItem("userInfo") ? null: "",
+    registerUser : null,
   },
   reducers: {
     login(state, action) {
@@ -15,9 +15,11 @@ const authSlice = createSlice({
     },
     logout(state,action) {
       state.user = null
+      state.registerUser = null
     },
     register(state,action){
-      state.registerUser = action.payload
+      state.registerUser = action.payload.message
+      state.user = action.payload.user
     }
   },
 });

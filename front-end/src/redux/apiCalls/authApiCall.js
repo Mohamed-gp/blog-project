@@ -46,11 +46,10 @@ export function logoutUser (){
 }
 
 export function registerUser (user){
-    return async (dispatch, getState) => { // get state takes the state from the store
+    return async (dispatch) => { // get state takes the state from the store
         try {
             const response = await request.post("/api/auth/signup",user)
-            dispatch(authActions.register(response.data.message));
-            console.log(response.data.user)
+            dispatch(authActions.register({message : response.data.message,user : response.data.user} ));
             localStorage.setItem("userInfo",JSON.stringify(response.data.user))
         } catch (error) {
             // Log any errors that occur during the API call

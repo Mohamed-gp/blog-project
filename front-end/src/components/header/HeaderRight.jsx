@@ -1,16 +1,16 @@
 import { BsArrow90DegDown, BsArrowBarDown, BsArrowDown, BsArrowDownLeft, BsArrowRight, BsDoorOpenFill, BsPersonAdd, BsPersonFill, BsTriangle, BsTriangleFill } from "react-icons/bs"
 import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
 import { logoutUser } from "../../redux/apiCalls/authApiCall"
 
 const HeaderRight = () => {
   const user = useSelector(state => state.auth.user)
+  
   const dispatch = useDispatch()
   const [dropDownOpen, setdropDownOpen] = useState(false)
   // const { user } = useSelector(state => state.auth)
-  console.log(user)
   return (
 
     <div className="flex items-center gap-2 font-bold right-header lg:w-[240px] text-sm sm:text-lg">
