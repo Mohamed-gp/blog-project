@@ -6,11 +6,17 @@ import { toast } from "react-toastify"
 import Swal from "sweetalert2"
 import UpdateProfileModel from "./UpdateProfileModel"
 import { useParams } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import { getUserProfile } from "../../redux/apiCalls/profileApiCall"
 
 const Profile = () => {
-    const [isOpenModel,setisOpenModel] = useState(false)
+    const [isOpenModel, setisOpenModel] = useState(false)
+    const dispatch = useDispatch()
     const [file, setfile] = useState(null)
-    const {id} = useParams()
+    const { id } = useParams()
+    dispatch(getUserProfile(id))
+    const profile = useSelector(state => state.profile.profileInfo)
+
     const formSubmitHandler = (e) => {
         e.preventDefault()
         if (!file) {
@@ -50,16 +56,18 @@ const Profile = () => {
                     <div className="flex flex-col items-center py-12">
                         <div className="flex flex-col gap-6">
                             <form onSubmit={formSubmitHandler} className="relative img">
-                                <img src={file ? URL.createObjectURL(file) : "/assets/images/user-avatar.png"} alt="" className="w-20 mx-auto overflow-hidden rounded-full" />
-                                <div className="absolute right-0 flex items-center gap-1 -bottom-2">
-                                    <label htmlFor="file" className="flex items-center justify-center p-1 text-2xl bg-white rounded-full cursor-pointer text-primary-color">
-                                        <BsCameraFill />
-                                    </label>
-                                    <button type="submit" className="px-2 text-base font-bold bg-white rounded-lg cursor-pointer text-primary-color">Upload</button>
-                                    <input type="file" id="file" className="hidden" onChange={(e) => { setfile(e.target.files[0]) }} />
+                                <div className="relative mx-auto w-fit">
+                                    <img src={file ? URL.createObjectURL(file) : "/assets/images/user-avatar.png"} alt="" className="object-cover w-20 h-20 mx-auto overflow-hidden rounded-full" />
+                                    <div className="absolute bottom-0 flex items-center gap-1 right-[-85px]">
+                                        <label htmlFor="file" className="flex items-center justify-center p-1 text-2xl bg-white rounded-full cursor-pointer text-primary-color">
+                                            <BsCameraFill />
+                                        </label>
+                                        <button type="submit" className="px-2 text-base font-bold bg-white rounded-lg cursor-pointer text-primary-color">Upload</button>
+                                        <input type="file" id="file" className="hidden" onChange={(e) => { setfile(e.target.files[0]) }} />
+                                    </div>
                                 </div>
                             </form>
-                            <p className="my-2 text-4xl font-bold">Youcef Abbas</p>
+                            <p className="my-2 text-4xl font-bold">p</p>
                         </div>
                         <div className="flex flex-col items-center gap-2">
 
@@ -67,7 +75,7 @@ const Profile = () => {
                                 <p className="text-base bio">it's mohamed a web developer, with React and Node js</p>
                                 <p className="font-bold text-[#929292]">Date Joined: <span className="text-green-sea-color">Fri Nov 04 2022</span></p>
                             </div>
-                            <button onClick={() => {setisOpenModel(true)}} className="flex items-center px-4 py-1 my-2 w-fit rounded-xl bg-green-color">
+                            <button onClick={() => { setisOpenModel(true) }} className="flex items-center px-4 py-1 my-2 w-fit rounded-xl bg-green-color">
                                 <BsPersonFill />
                                 <p>Update Profile</p>
                             </button>
@@ -82,7 +90,7 @@ const Profile = () => {
                     <button onClick={() => { deleteHandler() }} className="px-2 py-1 text-xl font-bold border-2 cursor-pointer w-fit text-red-color border-red-color rounded-xl ">Delete Your Account</button>
                 </div>
             </div>
-            {isOpenModel && <UpdateProfileModel setisOpenModel={setisOpenModel}/>}
+            {isOpenModel && <UpdateProfileModel setisOpenModel={setisOpenModel} />}
         </>
     )
 }

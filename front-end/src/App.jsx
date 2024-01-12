@@ -47,7 +47,7 @@ function App() {
             <Route path='posts-table' element={!user?.isAdmin ? <Navigate to="/"/> : <PostsTable />} />
             <Route path='categories-table' element={!user?.isAdmin ? <Navigate to="/"/> : <CategoriesTable />} />
           </Route>
-          <Route path='/profile/:id' element={<Profile />} />
+          <Route path='/profile/:id' element={user ? <Profile /> : <Navigate to="/" />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
         <Footer />
