@@ -1,6 +1,7 @@
 import { toast } from "react-toastify";
 import request from "../../utils/request";
 import { profileAction } from "../slices/profileSlice";
+import { authActions } from "../slices/authSlice";
 
 
 export function getUserProfile (id) { 
@@ -28,6 +29,11 @@ export function updateUserPhotoProfile (image) {
                 
             })
             dispatch(profileAction.editProfilePhoto(data.profilePhoto))
+            dispatch(authActions.editPhotoProfileHeader(data.profilePhoto))
+            const user = JSON.parse(localStorage.getItem("userInfo"))
+            
+            user.profilePhoto = data?.profilePhoto
+            localStorage.setItem("userInfo",JSON.stringify(user))
             toast.success(data.message)
         } catch (error) {
             console.log(error)
