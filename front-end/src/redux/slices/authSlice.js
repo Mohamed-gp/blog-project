@@ -20,7 +20,8 @@ const authSlice = createSlice({
     register(state,action){
       state.registerUser = action.payload.message
       state.user = action.payload.user
-    }
+    },
+    
   },
 });
 

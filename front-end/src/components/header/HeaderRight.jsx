@@ -22,7 +22,7 @@ const HeaderRight = () => {
               {dropDownOpen ? <BsTriangleFill onClick={() => { setdropDownOpen(false) }} className="cursor-pointer text-[10px]  duration-500" /> :
                 <BsTriangleFill className="text-[10px] rotate-180 cursor-auto duration-500" onClick={() => { setdropDownOpen(true) }} />}
             </div>
-            <p>{user.username}</p>
+            <p className="text-center">{user.username}</p>
             <div>
               {/*
                user is an object that likely represents a user's information. The ? symbol is called the optional chaining operator. It is used to safely access properties of an object that may be null or undefined. 

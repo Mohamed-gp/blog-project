@@ -1,20 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
 const profileSlice = createSlice({
-    name : "profile",
-    initialState: {
-        profileInfo: null,
+  name: "profile",
+  initialState: {
+    profileInfo: null,
+  },
+  reducers: {
+    setProfile(state, action) {
+      state.profileInfo = action.payload;
     },
-    reducers: {
-        setProfile(state,action){
-            state.profileInfo = action.payload
-        }
+    editProfilePhoto (state,action) {
+      state.profileInfo.profilePhoto = action.payload
     }
-})
+  },
+});
 
+const profileAction = profileSlice.actions;
+const profileReducer = profileSlice.reducer;
 
-const profileAction = profileSlice.actions
-const profileReducer = profileSlice.reducer
-
-export {profileAction , profileReducer}
+export { profileAction, profileReducer };
