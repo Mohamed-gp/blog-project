@@ -13,9 +13,8 @@ const HeaderRight = () => {
   // console.log(localStorage.getItem("userInfo"))
   // console.log(JSON.parse(localStorage.getItem("userInfo")))
   // console.log(JSON.parse(JSON.parse((JSON.parse(JSON.parse(localStorage.getItem("userInfo")))))).profilePhoto.url)
-
   return (
-
+    
     <div className="flex items-center gap-2 font-bold right-header lg:w-[240px] text-sm sm:text-lg">
       {user ?
       (
@@ -33,7 +32,7 @@ const HeaderRight = () => {
                 <img src={user?.profilePhoto.url} alt={user.username} className="w-8 h-8 rounded-full lg:w-12 lg:h-12 " />
                 In this case, user?.profilePhoto.url is accessing the profilePhoto.url property of the user object. If the user object is null or undefined, the expression will short-circuit and return undefined instead of throwing an error. 
               */}
-              <img src={JSON.parse(localStorage.getItem("userInfo")).profilePhoto.image_url} alt={user.username} className="w-8 h-8 rounded-full lg:w-12 lg:h-12 " />
+              <img src={user.profilePhoto.url} alt={user.username} className="w-8 h-8 rounded-full lg:w-12 lg:h-12 " />
             </div>
             {dropDownOpen &&
               <div className="drop-down-profile z-10 absolute -left-[50px] top-[63px] bg-blue-color text-[18px] px-[25px] py-2 leading-loose rounded-3xl">

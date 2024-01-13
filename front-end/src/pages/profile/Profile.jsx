@@ -98,7 +98,7 @@ const Profile = () => {
                         <button onClick={() => { deleteHandler() }} className="px-2 py-1 text-xl font-bold border-2 cursor-pointer w-fit text-red-color border-red-color rounded-xl ">Delete Your Account</button>
                     </div>
                 </div>
-                {isOpenModel && <UpdateProfileModel setisOpenModel={setisOpenModel} />}
+                {isOpenModel && <UpdateProfileModel setisOpenModel={setisOpenModel} profile={profile} />}
             </div>
         </>
 

@@ -114,7 +114,7 @@ const updateUserPhotoProfile = asyncHandler(async (req, res) => {
   res.status(200).json({
     message: "your profile photo uploaded successfully",
     profilePhoto: {
-      image_url: result.secure_url,
+      url: result.secure_url,
       image_id: result.public_id,
     },
   });

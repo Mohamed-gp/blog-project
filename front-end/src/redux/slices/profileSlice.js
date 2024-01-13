@@ -11,7 +11,11 @@ const profileSlice = createSlice({
     },
     editProfilePhoto (state,action) {
       state.profileInfo.profilePhoto = action.payload
-    }
+    },
+    editProfileInfo (state,action){
+      state.profileInfo = action.payload
+      
+    } 
   },
 });
 

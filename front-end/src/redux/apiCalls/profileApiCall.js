@@ -36,8 +36,25 @@ export function updateUserPhotoProfile (image) {
             localStorage.setItem("userInfo",JSON.stringify(user))
             toast.success(data.message)
         } catch (error) {
-            console.log(error)
+            toast.error(error.response.data.message)
+            console.log(error.response.data.message)
         }
     }
 }
 
+export function editUserProfile (id,info) {
+    return async (dispatch,getstate) => {
+        try {
+            const { data } = await request.post(`/api/profile/${id}`,info,{
+                headers : {
+                    Authorization : "Bearer " + getstate().auth.user.token
+                }
+            })
+            console.log(data)
+            dispatch(profileAction.editProfileInfo(data))
+        } catch (error) {
+            toast.error(error.response.data.message)
+            console.log(error.response.data.message)
+        }
+    }
+} 

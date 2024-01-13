@@ -2,14 +2,13 @@
 import { useState } from "react"
 import { BsX, BsXCircle } from "react-icons/bs"
 import { toast } from "react-toastify"
+import { editUserProfile } from "../../redux/apiCalls/profileApiCall"
+import { useDispatch } from "react-redux"
 
-const UpdateProfileModel = ({ setisOpenModel }) => {
-    const user = {
-        username: "Youcef Abbas",
-        bio: "it's mohamed a web developer, with React and Node js",
-    }
-    const [username, setusername] = useState(user.username)
-    const [bio, setbio] = useState(user.bio)
+const UpdateProfileModel = ({ setisOpenModel,profile }) => {
+    const dispatch = useDispatch()
+    const [username, setusername] = useState(profile.username)
+    const [bio, setbio] = useState(profile.bio)
     const [password, setpassword] = useState("")
     const formOnSubmit = (e) => {
         e.preventDefault()
@@ -23,9 +22,10 @@ const UpdateProfileModel = ({ setisOpenModel }) => {
             username : username,
             bio : bio
         }
-        if (password.trim() === "") {
+        if (password.trim() !== "") {
             updatedUser.password = password
         }
+        dispatch(editUserProfile(profile._id,{username,bio,password}))
         return toast.success("profile information updated succefuly")
     }
     return (
