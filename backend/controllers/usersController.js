@@ -62,7 +62,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       $set: {
         username: req.body.username,
         password: req.body.password,
-        email: req.body.email,
+        bio: req.body.bio,
       },
     },
     { new: true }

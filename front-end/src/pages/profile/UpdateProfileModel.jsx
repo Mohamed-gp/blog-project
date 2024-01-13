@@ -25,7 +25,7 @@ const UpdateProfileModel = ({ setisOpenModel,profile }) => {
         if (password.trim() !== "") {
             updatedUser.password = password
         }
-        dispatch(editUserProfile(profile._id,{username,bio,password}))
+        dispatch(editUserProfile(profile._id,updatedUser))
         return toast.success("profile information updated succefuly")
     }
     return (
@@ -44,7 +44,6 @@ const UpdateProfileModel = ({ setisOpenModel,profile }) => {
                     <BsX className="text-3xl" />
                 </div>
                 {/* <p>This is an example <abbr title="Hypertext Markup Language">HTML</abbr> document.</p> */}
-
             </div>
         </>
     )

@@ -43,15 +43,19 @@ export function updateUserPhotoProfile (image) {
 }
 
 export function editUserProfile (id,info) {
-    return async (dispatch,getstate) => {
+    return async (dispatch,getState) => {
         try {
-            const { data } = await request.post(`/api/profile/${id}`,info,{
+            let { data } = await request.put(`/api/users/profile/${id}`,info,{
                 headers : {
-                    Authorization : "Bearer " + getstate().auth.user.token
+                    Authorization : "Bearer " + getState().auth.user.token
                 }
             })
-            console.log(data)
+            const token = getState().auth.user.token
+            data.token = token
             dispatch(profileAction.editProfileInfo(data))
+            dispatch(authActions.login(data))
+            
+            // dispatch(authActions.login(data))
         } catch (error) {
             toast.error(error.response.data.message)
             console.log(error.response.data.message)

@@ -7,7 +7,6 @@ const router = require("express").Router()
 
 
 router.route("/profile").get(verifyTokenAndAdmin,getAllUsers)
-
 router.route("/profile/:id").get(validateObjectId,getUserById)
                             .put(validateObjectId,verifyTokenAndUser,updateUserProfile)
                             .delete(validateObjectId,verifyTokenAndUserAndAdmin,deleteUser)

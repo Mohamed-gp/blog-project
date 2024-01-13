@@ -26,6 +26,8 @@ app.use("/api/auth",require("./routes/authRouter"))
 
 app.use("/api/users",require("./routes/usersRouter"))
 
+
+
 // posts route
 app.use("/api/posts",require("./routes/postsRouter"))
 // comments route
