@@ -26,6 +26,7 @@ const UpdateProfileModel = ({ setisOpenModel,profile }) => {
             updatedUser.password = password
         }
         dispatch(editUserProfile(profile._id,updatedUser))
+        setisOpenModel(false)
         return toast.success("profile information updated succefuly")
     }
     return (

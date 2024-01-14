@@ -74,7 +74,7 @@
   background-image: url("../src/assets/images/home-bg.jpg");
 } */
 nav{
-  z-index: 100;
+  z-index: 20;
 }
 .category-link:hover::before{
   background-color: white;

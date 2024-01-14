@@ -1,9 +1,10 @@
 import { useState } from "react"
 
 
-const Pagination = ({currentPage,setcurrentPage,postsPagesNumber}) => {
+const Pagination = ({currentPage,setcurrentPage,postsCount}) => {
   let emptyArray = []
-  for (let i = 1; i <= postsPagesNumber; i++) {
+  const pagesMax = Math.ceil(postsCount / 3)
+  for (let i = 1; i <= pagesMax; i++) {
     emptyArray.push(i)
   }
   
@@ -17,7 +18,7 @@ const Pagination = ({currentPage,setcurrentPage,postsPagesNumber}) => {
                 ))
             }
         </div>
-        <button disabled={currentPage >= postsPagesNumber} className="px-3 py-2 text-white bg-blue-600 border border-orange-300 cursor-pointer next rounded-r-2xl disabled:opacity-50" onClick={() => {setcurrentPage(prev => prev + 1)}}>Next</button>
+        <button disabled={currentPage >= pagesMax} className="px-3 py-2 text-white bg-blue-600 border border-orange-300 cursor-pointer next rounded-r-2xl disabled:opacity-50" onClick={() => {setcurrentPage(prev => prev + 1)}}>Next</button>
     </div>
   )
 }
