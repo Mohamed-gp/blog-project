@@ -6,10 +6,10 @@ import { postsAction } from "../slices/postsSlice";
 
 
 // get posts based on page
-export function getPosts(pageNumber){
+export function getPosts(pageNumber,category){
     return async (dispatch) => {
         try {
-            const { data } = await request.get(`/api/posts?pageNumber=${pageNumber}`)
+            const { data } = await request.get(`/api/posts?pageNumber=${pageNumber}&category=${category}`)
             dispatch(postsAction.setPosts(data))
         } catch (error) {
             toast.error(error.response.data.message)

@@ -4,7 +4,7 @@ const PostItem = ({ post }) => {
   return (
     <div className="flex flex-col w-full p-4 mb-8 bg-white rounded-lg post-item">
       <div className="object-contain mb-2 overflow-hidden w-[65%] mx-auto rounded-xl ">
-        <img src={`/assets${post.image}`} alt={post.title} className="mx-auto" />
+        <img src={`${post.image}`} alt={post.title} className="mx-auto" />
       </div>
       <div className="flex flex-col gap-1 post-info">
         <div className="flex items-center justify-between gap-2 pb-3 border-b-2 border-b-black profile">

@@ -20,8 +20,10 @@ const PostsPage = () => {
   const postsCount = useSelector(state => state.postsReducer.postsCount)
   useEffect(() => {
     dispatch(getPosts(currentPage))
+  },[currentPage])
+  useEffect(() => {
     dispatch(getPostsCount())
-  },[currentPage,postsCount])
+  })
 
   // const [postPerPage, setpostPerPage] = useState(2)
   // const [currentPage, setcurrentPage] = useState(1)

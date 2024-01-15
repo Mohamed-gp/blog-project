@@ -3,9 +3,18 @@ import Hero from "../../components/hero/Hero"
 import Posts from "../../components/posts/Posts"
 import SideBarPosts from "../../components/side-bar-posts/SideBarPosts"
 import Title from "../../components/title/Title"
-import {posts,categories} from "../../dummyData"
+import {categories} from "../../dummyData"
+import { useSelector,useDispatch } from "react-redux"
+import { useEffect } from "react"
+import { getPosts } from "../../redux/apiCalls/postsApiCall"
+
 
 const Home = () => {
+  const dispatch = useDispatch()
+  const posts = useSelector(state => state.postsReducer.posts)
+  useEffect(() => {
+    dispatch(getPosts())
+  },[])
   return (
     <>
     <Hero/>
