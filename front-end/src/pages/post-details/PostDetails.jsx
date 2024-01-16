@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom"
-import { posts } from "../../dummyData"
 import { BsFillHandThumbsUpFill, BsFillTrashFill, BsImageFill, BsPencilSquare } from "react-icons/bs";
 import Title from "../../components/title/Title";
 import { useEffect, useState } from "react";
@@ -9,13 +8,18 @@ import CommentsList from "../../components/comments/CommentsList";
 import Swal from "sweetalert2";
 import UpdatePostModel from "./UpdatePostModel";
 import UpdateCommentModel from "../../components/comments/UpdateCommentModel";
+import { useDispatch, useSelector } from "react-redux";
+import { getPosts } from "../../redux/apiCalls/postsApiCall";
 
 
 const PostDetails = () => {
+  const dispatch = useDispatch()
   const [isOpenModel, setisOpenModel] = useState(false)
   const [commentPostModel,setcommentPostModel] = useState(false)
   const [file, setfile] = useState(null)
+  const posts = useSelector(state => state.postsReducer.posts)
   useEffect(() => {
+    dispatch(getPosts())
     window.scrollTo(0, 0)
   }, [])
 
@@ -61,7 +65,7 @@ const PostDetails = () => {
       <div className="container px-6 my-6">
         <div className="lg:w-[450px] mx-auto">
           <div>
-            <img src={file ? URL.createObjectURL(file) : `/assets${post.image}`} alt="" />
+            <img src={file ? URL.createObjectURL(file) : `/assets${post?.image}`} alt="" />
           </div>
           <form onSubmit={updateImageSubmitHandler} className="flex items-center gap-2 my-3 -ml-3 lg:-ml-6">
             <label htmlFor="file" className="flex gap-1 font-bold cursor-pointer text-blue-color">
@@ -73,7 +77,7 @@ const PostDetails = () => {
           </form>
         </div>
         <div className="text-center">
-          <Title title={post.title} />
+          <Title title={post?.title} />
         </div>
         <div className="lg:w-[750px] mx-auto">
           <div className="flex items-center justify-center w-full gap-3 mx-auto">
@@ -81,15 +85,15 @@ const PostDetails = () => {
               <img src="/assets/images/user-avatar.png" alt="avatar" />
             </div>
             <div className="flex flex-col ">
-              <p className="font-bold text-blue-color">{post.user.username}</p>
-              <p className="text-gray-color">{new Date(post.createdAt).toDateString()}</p>
+              <p className="font-bold text-blue-color">{post?.user.username}</p>
+              <p className="text-gray-color">{new Date(post?.createdAt).toDateString()}</p>
             </div>
           </div>
-          <p className="my-4">{post.description} Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, dignissimos, odit natus incidunt libero autem commodi alias ea fugit debitis dolores quam aut, reprehenderit possimus earum praesentium nemo minus. Voluptatibus.</p>
+          <p className="my-4">{post?.description} Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, dignissimos, odit natus incidunt libero autem commodi alias ea fugit debitis dolores quam aut, reprehenderit possimus earum praesentium nemo minus. Voluptatibus.</p>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1 text-2xl font-bold cursor-pointer likes text-blue-color">
               <BsFillHandThumbsUpFill />
-              <p>{post.likes.length} Likes</p>
+              <p>{post?.likes?.length} Likes</p>
             </div>
             <div className="flex items-center gap-1 text-2xl font-bold likes text-blue-color">
               <BsPencilSquare  className="cursor-pointer text-green-color" onClick={() => {setisOpenModel(prev => !prev)}}/>
