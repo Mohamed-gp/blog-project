@@ -1,27 +1,26 @@
 import { useParams } from "react-router-dom"
 import Posts from "../../components/posts/Posts"
-import { posts } from "../../dummyData"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { getPosts } from "../../redux/apiCalls/postsApiCall"
+import { getPostBasedCate, getPosts } from "../../redux/apiCalls/postsApiCall"
 
 
 
 const Category = () => {
     const dispatch = useDispatch()
-    const posts = useSelector(state => state.postsReducer.posts)
+    const postsByCat = useSelector(state => state.postsReducer.postsCate)
     
     
     const { category } = useParams()
     useEffect(() => {
         scrollTo(0,0)
-        dispatch(getPosts(undefined,category))
-        console.log(posts)
+        dispatch(getPostBasedCate(category))
+        console.log(postsByCat)
     },[])
     return (
         <div className="container">
             <p className="py-6 text-3xl font-bold">Post Based On {category}</p>
-            <Posts posts={posts}/>
+            <Posts posts={postsByCat}/>
         </div>
     )
 }
