@@ -47,3 +47,29 @@ export function getPostBasedCate (category) {
         }
     }
 }
+
+
+
+
+export function createPost(info) {
+    return async (dispatch,getState) => {
+        try {
+            dispatch(postsAction.setLoadingTrue())
+            const { data } = await request.post("/api/posts",info,{
+                headers : {
+                    Authorization : "Bearer " + getState().auth.user.token
+                },
+                "Content-Type" : "multipart/form-data",
+                
+            },)
+    
+            console.log(data)
+    
+            dispatch(postsAction.setLoadingFalse())
+            
+        } catch (error) {
+            console.log(error.response.data.message)
+            toast.error(error.response.data.message)
+        }
+    }
+} 
