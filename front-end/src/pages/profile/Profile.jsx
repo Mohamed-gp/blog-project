@@ -6,7 +6,7 @@ import Swal from "sweetalert2"
 import UpdateProfileModel from "./UpdateProfileModel"
 import { useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { getUserProfile, updateUserPhotoProfile } from "../../redux/apiCalls/profileApiCall"
+import { deleteUser, getUserProfile, updateUserPhotoProfile } from "../../redux/apiCalls/profileApiCall"
 
 const Profile = () => {
     const [isOpenModel, setisOpenModel] = useState(false)
@@ -47,6 +47,7 @@ const Profile = () => {
                     text: "Your Profile has been deleted.",
                     icon: "success"
                 });
+                dispatch(deleteUser(id))
             } else {
                 Swal.fire({
                     title: "your profile is safe!",

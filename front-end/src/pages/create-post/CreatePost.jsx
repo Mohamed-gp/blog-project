@@ -34,9 +34,10 @@ const CreatePost = () => {
     // }
     // @TO-DO send form data to server
   }
+
   return (
     <>
-      <div className="px-6 contianer" style={{ height: "calc(100vh - (72px +  48px))" }}>
+      <div className="px-6 contianer" style={{ height: "calc(100vh - (81px +  48px))" }}>
         <div className="text-center">
           <Title title="Create New Post" />
         </div>

@@ -14,8 +14,10 @@ const profileSlice = createSlice({
     },
     editProfileInfo (state,action){
       state.profileInfo = action.payload
-      
-    } 
+    },
+    setProfileStoreNull(state,action){
+      state.profileInfo = null
+    }
   },
 });
 

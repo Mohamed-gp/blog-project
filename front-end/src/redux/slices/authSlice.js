@@ -23,6 +23,9 @@ const authSlice = createSlice({
     },
     editPhotoProfileHeader (state,action){
       state.user.profilePhoto = action.payload 
+    },
+    setUserStoreNull(state,action){
+      state.user = null
     }
     
   },
