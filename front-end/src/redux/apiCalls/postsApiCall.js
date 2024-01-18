@@ -44,9 +44,9 @@ export function createPost(info) {
     try {
       dispatch(postsAction.setLoadingTrue());
       const { data } = await request.post("/api/posts", info, {
-        headers : {
-            Authorization : "Bearer " + getState().auth.user.token,
-            "Content-Type" : "multipart/form-data"
+        headers: {
+          Authorization: "Bearer " + getState().auth.user.token,
+          "Content-Type": "multipart/form-data",
         },
       });
 

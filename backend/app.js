@@ -3,6 +3,8 @@ const express = require("express")
 const connectToDB = require("./config/connectDB")
 const cors = require("cors")
 const { notFound, errorHandler } = require("./middlewares/error")
+const { User } = require("./models/User")
+const { Post } = require("./models/Post")
 
 // connection to DB
 connectToDB()
@@ -14,8 +16,13 @@ const app = express()
 app.use(express.json())
 
 
+
+
+
 // cors before route because front end is another domain he need to acces it 
 app.use(cors())
+
+
 
 // routes 
 
@@ -29,6 +36,7 @@ app.use("/api/users",require("./routes/usersRouter"))
 
 
 // posts route
+
 app.use("/api/posts",require("./routes/postsRouter"))
 // comments route
 app.use("/api/comments",require("./routes/commentsRouter"))

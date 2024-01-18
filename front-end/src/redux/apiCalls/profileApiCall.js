@@ -69,16 +69,16 @@ export function editUserProfile(id, info) {
 export function deleteUser(id) {
   return async (dispatch, getState) => {
     try {
-      const { data } = await request.delete(`api/users/profile/${id}`, {
+      await request.delete(`/api/users/profile/${id}`, {
         headers: {
           Authorization: "Bearer " + getState().auth.user.token,
         },
       });
       dispatch(profileAction.setProfileStoreNull())
       dispatch(authActions.setUserStoreNull())
-      localStorage.setItem("userInfo",null)
-      localStorage.setItem("profileInfo",null)
-
+      localStorage.removeItem("userInfo")
+      localStorage.removeItem("profileInfo")
+      
     } catch (error) {
       toast.error(error.response.data.message);
       console.log(error.response.data.message);

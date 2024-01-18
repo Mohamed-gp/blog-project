@@ -129,6 +129,7 @@ const updateUserPhotoProfile = asyncHandler(async (req, res) => {
  * @access private only admin and user himself
  * @method DELETE
  */
+
 const deleteUser = asyncHandler(async (req, res) => {
   // 1- get the user from db
   const user = await User.findById(req.params.id);

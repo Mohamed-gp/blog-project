@@ -51,7 +51,7 @@ const CreatePost = () => {
           </select>
           <textarea value={postDescription} name="" id="" className="w-full pt-4 pl-4 resize-none h-36 rounded-xl" placeholder="Post Description" onChange={(e) => { setpostDescription(e.target.value) }}></textarea>
           <input type="file" name="file" id="file" className="w-full py-3 pl-4 cursor-pointer rounded-xl bg-gray-color" onChange={(e) => { setfile(e.target.files[0]) }} />
-          {loading ? (<ThreeDots
+          {false ? (<ThreeDots
             visible={true}
             height="80"
             width="80"

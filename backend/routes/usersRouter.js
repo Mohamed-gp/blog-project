@@ -16,3 +16,7 @@ router.route("/profile/profile-photo-upload").post(verifyToken,photoUpload.singl
 router.route("/count").get(verifyTokenAndAdmin,getUsersCount)
 
 module.exports = router
+
+
+
+
