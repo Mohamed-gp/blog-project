@@ -50,7 +50,7 @@ export function createPost(info) {
         },
       });
 
-      console.log(data);
+      toast.success("Post Created Succefully")
 
       dispatch(postsAction.setLoadingFalse());
     } catch (error) {

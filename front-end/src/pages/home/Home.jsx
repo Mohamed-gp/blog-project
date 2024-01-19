@@ -7,14 +7,25 @@ import {categories} from "../../dummyData"
 import { useSelector,useDispatch } from "react-redux"
 import { useEffect } from "react"
 import { getPosts } from "../../redux/apiCalls/postsApiCall"
+import Swal from "sweetalert2"
 
 
 const Home = () => {
   const dispatch = useDispatch()
   const posts = useSelector(state => state.postsReducer.posts)
+  const registeredMessage = useSelector(state => state.auth.registerUser)
+
   useEffect(() => {
     dispatch(getPosts())
   },[])
+  if (registeredMessage) {
+    Swal.fire({
+      title: registeredMessage,
+      text: registeredMessage,
+      icon: "success",
+    })
+    
+  }
   return (
     <>
     <Hero/>

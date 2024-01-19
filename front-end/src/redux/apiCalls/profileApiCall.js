@@ -74,10 +74,10 @@ export function deleteUser(id) {
           Authorization: "Bearer " + getState().auth.user.token,
         },
       });
-      dispatch(profileAction.setProfileStoreNull())
-      dispatch(authActions.setUserStoreNull())
       localStorage.removeItem("userInfo")
       localStorage.removeItem("profileInfo")
+      dispatch(profileAction.setProfileStoreNull())
+      dispatch(authActions.setUserStoreNull())
       
     } catch (error) {
       toast.error(error.response.data.message);

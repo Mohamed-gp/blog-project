@@ -7,7 +7,7 @@ import { ThreeDots } from "react-loader-spinner"
 
 const CreatePost = () => {
   const [postTitle, setpostTitle] = useState("")
-  const [postCategory, setpostCategory] = useState("")
+  const [postCategory, setpostCategory] = useState("programming")
   const [postDescription, setpostDescription] = useState("")
   const [file, setfile] = useState(null)
   const dispatch = useDispatch()
@@ -45,7 +45,7 @@ const CreatePost = () => {
           <input value={postTitle} type="text" className="w-full h-10 pl-4 rounded-xl" placeholder="Post Title" onChange={(e) => { setpostTitle(e.target.value) }} />
           <select value={postCategory} name="" id="" className="w-full h-10 pl-4 rounded-xl" onChange={(e) => { setpostCategory(e.target.value) }}>
             <option disabled >Select A Category</option>
-            <option value="programming" >programming</option>
+            <option value="programming" selected >programming</option>
             <option value="sports" >sports</option>
             <option value="geography" >geography</option>
           </select>

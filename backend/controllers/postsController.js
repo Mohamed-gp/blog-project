@@ -29,9 +29,8 @@ const addPost = asyncHandler(async (req, res) => {
   if (error) {
     res.status(400).json({ message: error.details[0].message });
   }
-
   // 3. upload photo
-  const imagePath = path.join(__dirname, `../${req.file.filename}`);
+  const imagePath = path.join(__dirname, `../images/${req.file.filename}`);
   const result = await cloudinaryUploadImage(imagePath);
   // 4. create post
   //   const post = await Post.create({

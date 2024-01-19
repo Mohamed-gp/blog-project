@@ -42,12 +42,12 @@ const Profile = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
+                dispatch(deleteUser(id))
                 Swal.fire({
                     title: "Deleted!",
                     text: "Your Profile has been deleted.",
                     icon: "success"
                 });
-                dispatch(deleteUser(id))
             } else {
                 Swal.fire({
                     title: "your profile is safe!",

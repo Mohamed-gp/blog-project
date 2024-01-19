@@ -66,7 +66,9 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       },
     },
     { new: true }
-  ).select("-password");
+  )
+    .select("-password")
+    .populate("posts");
 
   res.status(200).json(userUpdated);
 });
@@ -114,8 +116,8 @@ const updateUserPhotoProfile = asyncHandler(async (req, res) => {
   res.status(200).json({
     message: "your profile photo uploaded successfully",
     profilePhoto: {
+      publicId: result.public_id,
       url: result.secure_url,
-      image_id: result.public_id,
     },
   });
   // 8.remove image from the server
@@ -141,13 +143,15 @@ const deleteUser = asyncHandler(async (req, res) => {
 
   // 3- get the public ids from the posts
   // video number 20
-  const publicIds = posts.map((post) => post.image.publicId);
+  const publicIds = posts?.map((post) => post?.image?.publicId);
   // 4- delete all postsimage from couldinary that belong to this user
   if (publicIds.length > 0) {
     await cloudinaryRemoveManyImages(publicIds);
   }
   // 5- delete the profile picture from cloudinary
-  await cloudinaryRemoveImage(user.profilePhoto.publicId);
+  if (user.profilePhoto.publicIds != null) {
+    await cloudinaryRemoveImage(user?.profilePhoto?.publicId);
+  }
   // 6- delete user posts & comments
   await Comment.deleteMany({ user: user._id });
   await Post.deleteMany({ user: user._id });

@@ -14,7 +14,6 @@ const Register = () => {
   const [username, setusername] = useState("")
   const [email, setemail] = useState("")
   const [password, setpassword] = useState("")
-  const registeredMessage = useSelector(state => state.auth.registerUser)
   const formOnSubmit = (e) => {
     e.preventDefault()
     if (username.trim() === "") {
@@ -28,17 +27,7 @@ const Register = () => {
     }
     dispatch(registerUser({username,email,password}))
   }
-  if (registeredMessage) {
-    Swal.fire({
-      title: registeredMessage,
-      text: registeredMessage,
-      icon: "success",
-    }).then(isOkay => {
-      if (isOkay) {
-        navigate("/")
-      }
-    }) ;
-  }
+
   return (
     <div className="px-6 contianer" style={{ height: "calc(100vh - (72px +  48px))", display: "flex", justifyContent: "center", flexDirection: "column" }}>
       <div className="text-center">
