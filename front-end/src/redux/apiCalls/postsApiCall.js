@@ -1,6 +1,7 @@
 import { toast } from "react-toastify";
 import request from "../../utils/request";
 import { postsAction } from "../slices/postsSlice";
+import { useNavigate } from "react-router-dom";
 
 // get posts based on page
 export function getPosts(pageNumber, category) {
@@ -51,8 +52,9 @@ export function createPost(info) {
       });
 
       toast.success("Post Created Succefully")
-
       dispatch(postsAction.setLoadingFalse());
+      
+
     } catch (error) {
       console.log(error.response.data.message);
       toast.error(error.response.data.message);

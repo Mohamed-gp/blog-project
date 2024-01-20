@@ -4,6 +4,7 @@ import { toast } from "react-toastify"
 import { useDispatch, useSelector } from "react-redux"
 import { createPost } from "../../redux/apiCalls/postsApiCall"
 import { ThreeDots } from "react-loader-spinner"
+import { useNavigate } from "react-router-dom"
 
 const CreatePost = () => {
   const [postTitle, setpostTitle] = useState("")
@@ -11,6 +12,7 @@ const CreatePost = () => {
   const [postDescription, setpostDescription] = useState("")
   const [file, setfile] = useState(null)
   const dispatch = useDispatch()
+  
   const loading = useSelector(state => state.postsReducer.isLoading)
 
   const formOnSubmit = (e) => {
@@ -51,7 +53,7 @@ const CreatePost = () => {
           </select>
           <textarea value={postDescription} name="" id="" className="w-full pt-4 pl-4 resize-none h-36 rounded-xl" placeholder="Post Description" onChange={(e) => { setpostDescription(e.target.value) }}></textarea>
           <input type="file" name="file" id="file" className="w-full py-3 pl-4 cursor-pointer rounded-xl bg-gray-color" onChange={(e) => { setfile(e.target.files[0]) }} />
-          {false ? (<ThreeDots
+          {loading ? (<ThreeDots
             visible={true}
             height="80"
             width="80"

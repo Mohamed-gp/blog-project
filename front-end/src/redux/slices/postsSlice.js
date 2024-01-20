@@ -25,6 +25,12 @@ const postsSlice = createSlice({
     setLoadingTrue(state, action) {
       state.isLoading = true;
     },
+    setPostFalse(state,action){
+      state.createPostProcess = false
+    },
+    setPostTrue(state,action){
+      state.createPostProcess = true
+    }
     // setPostIsCreated(state, action) {
     //   (state.createPostProcess = true), (state.isLoading = true);
     // },

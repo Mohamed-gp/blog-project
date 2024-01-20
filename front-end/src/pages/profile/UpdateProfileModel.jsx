@@ -37,7 +37,7 @@ const UpdateProfileModel = ({ setisOpenModel,profile }) => {
                 <p className="mt-5 font-bold text-center">Update Profile</p>
                 <form onSubmit={formOnSubmit} action="" className="flex gap-2 flex-col lg:w-[450px] items-center mx-auto my-4 ">
                     <input value={username} onChange={(e) => {setusername(e.target.value)}} type="text" className="w-full h-10 pl-4 border border-solid rounded-xl" placeholder="Profile Username" />
-                    <textarea value={bio} onChange={(e) => { setbio(e.target.value) }} name="" id="" className="w-full pt-4 pl-4 border border-solid resize-none h-36 rounded-xl" placeholder="Post Description"></textarea>
+                    <textarea value={bio} onChange={(e) => { setbio(e.target.value) }} name="" id="" className="w-full pt-4 pl-4 border border-solid resize-none h-36 rounded-xl" placeholder="Bio Description"></textarea>
                     <input value={password} onChange={(e) => {setpassword(e.target.value)}} type="text" className="w-full h-10 pl-4 border border-solid rounded-xl" placeholder="Profile Password" />
                     <input type="submit" value="Create" className="self-end w-full h-10 font-bold text-white border border-solid rounded-xl bg-blue-color" />
                 </form>
