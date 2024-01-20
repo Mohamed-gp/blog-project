@@ -12,9 +12,19 @@ const CreatePost = () => {
   const [postDescription, setpostDescription] = useState("")
   const [file, setfile] = useState(null)
   const dispatch = useDispatch()
-  
+  const createdPost = useSelector(state => state.postsReducer.inProcess)
   const loading = useSelector(state => state.postsReducer.isLoading)
+  const navigate = useNavigate()
+  const [indicatorUseEffect,setindicatorUseEffect] = useState(false)
 
+
+  useEffect(() => {
+
+    if (createdPost && !loading && !indicatorUseEffect == false)  {
+      setindicatorUseEffect(true)
+      navigate("/")
+    }
+  },[createdPost,loading])
   const formOnSubmit = (e) => {
 
     e.preventDefault()

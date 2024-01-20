@@ -50,11 +50,10 @@ export function createPost(info) {
           "Content-Type": "multipart/form-data",
         },
       });
-
-      toast.success("Post Created Succefully")
+      dispatch(postsAction.setPostinProcessTrue());
       dispatch(postsAction.setLoadingFalse());
-      
-
+      dispatch(postsAction.setPostinProcessFalse());
+      toast.success("Post Created Succefully");
     } catch (error) {
       console.log(error.response.data.message);
       toast.error(error.response.data.message);

@@ -7,7 +7,7 @@ const postsSlice = createSlice({
     postsCount: null,
     postsCate: [],
     isLoading: false,
-    createPostProcess: false,
+    inProcess: false,
   },
   reducers: {
     setPosts(state, action) {
@@ -25,11 +25,11 @@ const postsSlice = createSlice({
     setLoadingTrue(state, action) {
       state.isLoading = true;
     },
-    setPostFalse(state,action){
-      state.createPostProcess = false
+    setPostinProcessFalse(state,action){
+      state.inProcess = false
     },
-    setPostTrue(state,action){
-      state.createPostProcess = true
+    setPostinProcessTrue(state,action){
+      state.inProcess = true
     }
     // setPostIsCreated(state, action) {
     //   (state.createPostProcess = true), (state.isLoading = true);
