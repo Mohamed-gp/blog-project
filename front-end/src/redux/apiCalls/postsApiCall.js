@@ -1,7 +1,6 @@
 import { toast } from "react-toastify";
 import request from "../../utils/request";
 import { postsAction } from "../slices/postsSlice";
-import { useNavigate } from "react-router-dom";
 
 // get posts based on page
 export function getPosts(pageNumber, category) {
@@ -50,11 +49,13 @@ export function createPost(info) {
           "Content-Type": "multipart/form-data",
         },
       });
-      dispatch(postsAction.setPostinProcessTrue());
+      // dispatch(postsAction.setPostinProcessTrue());
+      // dispatch(postsAction.setPostinProcessFalse());
       dispatch(postsAction.setLoadingFalse());
-      dispatch(postsAction.setPostinProcessFalse());
       toast.success("Post Created Succefully");
     } catch (error) {
+      dispatch(postsAction.setLoadingFalse());
+
       console.log(error.response.data.message);
       toast.error(error.response.data.message);
     }

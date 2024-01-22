@@ -25,7 +25,9 @@ const PostDetails = () => {
 
 
   const { id } = useParams()
-  let post = posts.find(post => post._id === +id)
+  
+  let post = posts.find(item => item._id == id)
+  console.log(post)
 
   const updateImageSubmitHandler = (e) => {
     e.preventDefault()
@@ -85,7 +87,7 @@ const PostDetails = () => {
               <img src="/assets/images/user-avatar.png" alt="avatar" />
             </div>
             <div className="flex flex-col ">
-              <p className="font-bold text-blue-color">{post?.user.username}</p>
+              <p className="font-bold text-blue-color">{post?.user?.username}</p>
               <p className="text-gray-color">{new Date(post?.createdAt).toDateString()}</p>
             </div>
           </div>

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { createPost } from "../../redux/apiCalls/postsApiCall"
 import { ThreeDots } from "react-loader-spinner"
 import { useNavigate } from "react-router-dom"
+import { postsAction } from "../../redux/slices/postsSlice"
 
 const CreatePost = () => {
   const [postTitle, setpostTitle] = useState("")
@@ -12,26 +13,27 @@ const CreatePost = () => {
   const [postDescription, setpostDescription] = useState("")
   const [file, setfile] = useState(null)
   const dispatch = useDispatch()
-  const createdPost = useSelector(state => state.postsReducer.inProcess)
+  // to do : creating then navigate to home for the ux
+  //  const createdPost = useSelector(state => state.postsReducer.inProcess)
   const loading = useSelector(state => state.postsReducer.isLoading)
-  const navigate = useNavigate()
-  const [indicatorUseEffect,setindicatorUseEffect] = useState(false)
 
 
-  useEffect(() => {
 
-    if (createdPost && !loading && !indicatorUseEffect == false)  {
-      setindicatorUseEffect(true)
-      navigate("/")
-    }
-  },[createdPost,loading])
   const formOnSubmit = (e) => {
-
     e.preventDefault()
-    if (postTitle.trim() === "") { return toast.error("post title"/*{position : "top-center",theme: "colored"})*/) }
-    if (postCategory.trim() === "") { return toast.error("post category is required") }
-    if (postDescription.trim() === "") { return toast.error("post description is required") }
-    if (!file) { return toast.error("post image is required") }
+    if (postTitle.trim() === "") {
+      return toast.error("post title"/*{position : "top-center",theme: "colored"})*/)
+    }
+    if (postCategory.trim() === "") {
+      return toast.error("post category is required")
+    }
+    if (postDescription.trim() === "") {
+      return toast.error("post description is required")
+    }
+    if (!file) {
+      return toast.error("post image is required")
+    }
+
     // we send it as formData because we have file and we can't send it as json
     const formData = new FormData()
     // key : value
@@ -44,7 +46,6 @@ const CreatePost = () => {
     // for (const entry of formData.entries()) {
     //   console.log(entry);
     // }
-    // @TO-DO send form data to server
   }
 
   return (
