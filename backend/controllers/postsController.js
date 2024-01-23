@@ -109,9 +109,9 @@ const getAllPosts = asyncHandler(async (req, res) => {
  * @access public
  */
 const getPostById = asyncHandler(async (req, res) => {
-  const post = await Post.findById(req.params.id)
-    .populate("user", ["-password"])
-    .populate("Comment.deleteMany({postId : post._id})s");
+  const post = await Post.findById(req.params.id).populate("user", [
+    "-password",
+  ]);
   if (!post) {
     return res.status(404).json({ message: "post not found" });
   }
@@ -144,7 +144,7 @@ const deletePost = asyncHandler(async (req, res) => {
     await Post.findByIdAndDelete(req.params.id);
     await cloudinaryRemoveImage(post.image.publicId);
   }
-  await Comment.deleteMany({postId : post._id})
+  await Comment.deleteMany({ postId: post._id });
   res.status(403).json({
     message:
       "you don't have the permission to delete only admin and user himself",

@@ -61,3 +61,16 @@ export function createPost(info) {
     }
   };
 }
+
+export function getPostById(id) {
+  return async (dispatch, getState) => {
+    try {
+      const { data } = await request.get(`/api/posts/${id}`);
+      dispatch(postsAction.setPost(data));
+    } catch (error) {
+      toast.error(error.response.data.message);
+      console.log(error.response.data.message);
+    }
+  };
+}
+

@@ -17,7 +17,8 @@ const profileSlice = createSlice({
     },
     setProfileStoreNull(state,action){
       state.profileInfo = null
-    }
+    },
+    
   },
 });
 

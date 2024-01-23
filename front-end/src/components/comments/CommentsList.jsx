@@ -1,7 +1,8 @@
 import { BsPencilSquare, BsTrash } from "react-icons/bs"
 import Swal from "sweetalert2";
 
-const CommentsList = ({setcommentPostModel}) => {
+const CommentsList = ({setcommentPostModel,comments}) => {
+    console.log(comments)
     const deleteCommentHandler = () => {
         Swal.fire({
             title: "Are you sure to delete your comment?",
