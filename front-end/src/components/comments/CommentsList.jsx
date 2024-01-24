@@ -2,7 +2,7 @@ import { BsPencilSquare, BsTrash } from "react-icons/bs"
 import Swal from "sweetalert2";
 
 const CommentsList = ({setcommentPostModel,comments}) => {
-    console.log(comments)
+    // console.log(comments)
     const deleteCommentHandler = () => {
         Swal.fire({
             title: "Are you sure to delete your comment?",
@@ -31,9 +31,9 @@ const CommentsList = ({setcommentPostModel,comments}) => {
     }
     return (
         <div>
-            <p className="my-4 text-2xl font-bold text-blue-color"  >4 Comments</p>
+            <p className="my-4 text-2xl font-bold text-blue-color"  >{comments?.length} Comments</p>
             <div className="flex flex-col gap-4">
-                {[1, 2, 3, 4].map(comment => (
+                {comments?.map(comment => (
                     // todo profile picture or let say like youtube comments
                     <div key={comment} className="flex flex-col gap-3 p-4 border-2 border-black rounded-xl">
                         <div className="flex items-center justify-between">

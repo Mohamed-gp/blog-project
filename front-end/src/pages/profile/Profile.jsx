@@ -14,7 +14,6 @@ const Profile = () => {
     const [file, setfile] = useState(null)
     const { id } = useParams()
     const profile = useSelector(state => state.profile.profileInfo)
-
     useEffect(() => {
         window.scrollTo(0, 0)
         dispatch(getUserProfile(id))

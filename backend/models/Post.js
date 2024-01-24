@@ -45,11 +45,10 @@ const postSchema = new mongoose.Schema(
 );
 
 postSchema.virtual("comments",{
-    ref: "Comments",
+    ref: "Comment", // this must be written like that or the problem Schema hasn't been registered for model "comments". Use mongoose.model(name, schema) will appear
     foreignField : "postId",
     localField : "_id"
 })
-
 
 
 // post model

@@ -89,15 +89,15 @@ const getAllPosts = asyncHandler(async (req, res) => {
       .limit(postsPerPage)
       .skip((pageNumber - 1) * postsPerPage)
       .sort({ createdAt: -1 })
-      .populate("user", ["-password"]);
+      .populate("user comments", ["-password"]);
   } else if (category) {
     posts = await Post.find({ category })
       .sort({ createdAt: -1 })
-      .populate("user", ["-password"]);
+      .populate("user comments", ["-password"]);
   } else {
     posts = await Post.find()
       .sort({ createdAt: -1 })
-      .populate("user", ["-password"]);
+      .populate("user comments", ["-password"]);
   }
   res.status(200).json(posts);
 });
@@ -109,7 +109,7 @@ const getAllPosts = asyncHandler(async (req, res) => {
  * @access public
  */
 const getPostById = asyncHandler(async (req, res) => {
-  const post = await Post.findById(req.params.id).populate("user", [
+  const post = await Post.findById(req.params.id).populate("user comments", [
     "-password",
   ]);
   if (!post) {
@@ -177,11 +177,11 @@ const editPost = asyncHandler(async (req, res) => {
       $set: {
         title: req.body.title,
         description: req.body.description,
+        category: req.body.category,
       },
-      category: req.body.category,
     },
     { new: true }
-  ).populate("user", ["-password"]);
+  ).populate("user comments", ["-password"]);
 
   res.status(200).json(updatedPost);
 });
