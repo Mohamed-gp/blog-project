@@ -1,8 +1,11 @@
 import { BsPencilSquare, BsTrash } from "react-icons/bs"
+import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
+import Moment from "react-moment"
 
-const CommentsList = ({setcommentPostModel,comments}) => {
-    // console.log(comments)
+const CommentsList = ({ setcommentPostModel, comments }) => {
+    const user = useSelector(state => state.auth.user)
+    console.log(comments)
     const deleteCommentHandler = () => {
         Swal.fire({
             title: "Are you sure to delete your comment?",
@@ -35,16 +38,25 @@ const CommentsList = ({setcommentPostModel,comments}) => {
             <div className="flex flex-col gap-4">
                 {comments?.map(comment => (
                     // todo profile picture or let say like youtube comments
-                    <div key={comment} className="flex flex-col gap-3 p-4 border-2 border-black rounded-xl">
+                    <div key={comment?._id} className="flex flex-col gap-3 p-4 border-2 border-black rounded-xl">
                         <div className="flex items-center justify-between">
-                            <p className="font-bold text-primary-color">Youcef Abbas</p>
-                            <p className="font-bold text-pumpkin-color">2 hours ago</p>
+                            <p className="font-bold text-primary-color">{comment?.username}</p>
+                            <div className="flex items-center gap-1">
+                                <Moment fromNow ago >
+                                    <p className="font-bold text-pumpkin-color">{comment?.createdAt}</p>
+                                </Moment>
+                                 ago
+                            </div>
+
+
                         </div>
                         <p>hello world hello world</p>
-                        <div className="flex justify-end gap-2" >
-                            <BsPencilSquare className="cursor-pointer text-green-color " onClick={() => {setcommentPostModel(prev => !prev)}}/>
-                            <BsTrash className="cursor-pointer text-red-color " onClick={() => { deleteCommentHandler() }} />
-                        </div>
+                        {comment._id === user?._id && (
+                            <div className="flex justify-end gap-2" >
+                                <BsPencilSquare className="cursor-pointer text-green-color " onClick={() => { setcommentPostModel(prev => !prev) }} />
+                                <BsTrash className="cursor-pointer text-red-color " onClick={() => { deleteCommentHandler() }} />
+                            </div>
+                        )}
                     </div>
                 ))}
             </div>
