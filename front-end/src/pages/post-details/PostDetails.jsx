@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 import UpdatePostModel from "./UpdatePostModel";
 import UpdateCommentModel from "../../components/comments/UpdateCommentModel";
 import { useDispatch, useSelector } from "react-redux";
-import { getPostById, getPosts } from "../../redux/apiCalls/postsApiCall";
+import { getPostById, getPosts, likeToggle } from "../../redux/apiCalls/postsApiCall";
 
 
 const PostDetails = () => {
@@ -25,8 +25,19 @@ const PostDetails = () => {
     dispatch(getPostById(id))
     window.scrollTo(0, 0)
   }, [])
-  
 
+  // for liked user version styling 
+  const [userLiked,setuserLiked] = useState(false)
+  useEffect(() => {
+    if (post) {
+      const isLikedUser = post?.likes?.find(userLiked => userLiked == user._id)
+      isLikedUser ? setuserLiked(true) : setuserLiked(false)
+    }
+  },[post])
+
+  const toggleLikeHandler = () => {
+    dispatch(likeToggle(post._id))
+  }
 
 
 
@@ -95,10 +106,10 @@ const PostDetails = () => {
             </div>
           </div>
           <p className="my-4">{post?.description} Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, dignissimos, odit natus incidunt libero autem commodi alias ea fugit debitis dolores quam aut, reprehenderit possimus earum praesentium nemo minus. Voluptatibus.</p>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-1 text-2xl font-bold cursor-pointer likes text-blue-color">
+          <div className={`flex items-center justify-between`}>
+            <div onClick={() => { toggleLikeHandler() }} className={`flex items-center w-fit mx-auto mr-0 bg-white px-[15px] rounded-3xl gap-2 text-blue-color py-1 text-xl ${userLiked ? "opacity-100" : "opacity-50"} cursor-pointer`}>
+              <p>{post?.likes?.length}</p>
               <BsFillHandThumbsUpFill />
-              <p>{post?.likes?.length} Likes</p>
             </div>
             {post?.user?._id === user?._id && (
               <div className="flex items-center gap-1 text-2xl font-bold likes text-blue-color">
@@ -109,7 +120,7 @@ const PostDetails = () => {
 
           </div>
           <AddComment />
-          <CommentsList setcommentPostModel={setcommentPostModel} comments={post?.comments}/>
+          <CommentsList setcommentPostModel={setcommentPostModel} comments={post?.comments} />
         </div>
       </div>
       {isOpenModel && <UpdatePostModel setisOpenModel={setisOpenModel} post={post} />}

@@ -27,10 +27,13 @@ router
   .post(verifyToken, photoUpload.single("image"), addPost);
 
 router
-      .route("/upload-image/:id")
-      .put(validateObjectId,verifyToken,photoUpload.single("image"),updatePostImage)
+  .route("/upload-image/:id")
+  .put(
+    validateObjectId,
+    verifyToken,
+    photoUpload.single("image"),
+    updatePostImage
+  );
 
-
-router
-      .route("like/:id").put(validateObjectId,verifyToken,toggleLike)
+router.route("/likes/:id").put(validateObjectId, verifyToken, toggleLike);
 module.exports = router;

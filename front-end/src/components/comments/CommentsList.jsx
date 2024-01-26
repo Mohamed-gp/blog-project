@@ -5,7 +5,6 @@ import Moment from "react-moment"
 
 const CommentsList = ({ setcommentPostModel, comments }) => {
     const user = useSelector(state => state.auth.user)
-    console.log(comments)
     const deleteCommentHandler = () => {
         Swal.fire({
             title: "Are you sure to delete your comment?",
@@ -41,16 +40,16 @@ const CommentsList = ({ setcommentPostModel, comments }) => {
                     <div key={comment?._id} className="flex flex-col gap-3 p-4 border-2 border-black rounded-xl">
                         <div className="flex items-center justify-between">
                             <p className="font-bold text-primary-color">{comment?.username}</p>
-                            <div className="flex items-center gap-1">
+                            <div className="flex items-center gap-1 font-bold text-pumpkin-color">
                                 <Moment fromNow ago >
-                                    <p className="font-bold text-pumpkin-color">{comment?.createdAt}</p>
+                                    <p className="">{comment?.createdAt}</p>
                                 </Moment>
                                  ago
                             </div>
 
 
                         </div>
-                        <p>hello world hello world</p>
+                        <p>{comment.text}</p>
                         {comment._id === user?._id && (
                             <div className="flex justify-end gap-2" >
                                 <BsPencilSquare className="cursor-pointer text-green-color " onClick={() => { setcommentPostModel(prev => !prev) }} />

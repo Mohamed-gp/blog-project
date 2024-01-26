@@ -75,3 +75,19 @@ export function getPostById(id) {
 }
 
 
+export function likeToggle (postId){
+  return async (dispatch,getState) => {
+    try {
+      const { data } = await request.put(`/api/posts/likes/${postId}`,null,{
+        headers: {
+          Authorization: "Bearer " + getState().auth.user.token,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      dispatch(postsAction.setLikes(data.likes));
+    } catch (error) {
+      toast.error(error.response.data.message)
+      console.log(error.response.data.message)
+    }
+  }
+} 

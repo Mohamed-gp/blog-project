@@ -181,7 +181,7 @@ const editPost = asyncHandler(async (req, res) => {
       },
     },
     { new: true }
-  ).populate("user comments", ["-password"]);
+  )
 
   res.status(200).json(updatedPost);
 });
@@ -233,7 +233,8 @@ const updatePostImage = asyncHandler(async (req, res) => {
 
 const toggleLike = asyncHandler(async (req, res) => {
   // get the post id and change the name of it from id to postId
-  const { id: postId } = req.params.id;
+  const { id: postId } = req.params;
+  
   let post = await Post.findById(postId);
   if (!post) {
     return res.status(404).json({ message: "no post found" });
@@ -257,7 +258,7 @@ const toggleLike = asyncHandler(async (req, res) => {
     post = await Post.findByIdAndUpdate(
       postId,
       {
-        // work on arrays it used to remove values
+        // work on arrays it used to add values
         $push: {
           likes: req.user.id,
         },
