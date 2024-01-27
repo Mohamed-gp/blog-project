@@ -18,8 +18,7 @@ const authSlice = createSlice({
       state.registerUser = null
     },
     register(state,action){
-      state.registerUser = action.payload.message
-      state.user = action.payload.user
+      state.user = action.payload
     },
     editPhotoProfileHeader (state,action){
       state.user.profilePhoto = action.payload 
