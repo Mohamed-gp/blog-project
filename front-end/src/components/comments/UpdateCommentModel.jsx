@@ -1,16 +1,19 @@
 import { useState } from "react"
 import { BsX, BsXCircle } from "react-icons/bs"
 import { toast } from "react-toastify"
+import { editComment } from "../../redux/apiCalls/commentsApiCall"
+import { useDispatch } from "react-redux"
 
-const UpdateCommentModel = ({ setcommentPostModel }) => {
+const UpdateCommentModel = ({ setcommentPostModel,commentPostModel }) => {
     const [commentText,setcommentText] = useState("")
+    const dispatch = useDispatch()
     const formOnSubmitHandler = (e) => {
         e.preventDefault()
         if (commentText.trim() === "") {
             return toast.error("enter a non empty comment")
         }
-
-        return toast.success("post changed succefuly")
+        dispatch(editComment(commentText,commentPostModel.id))
+         
     }
     return (
         <>

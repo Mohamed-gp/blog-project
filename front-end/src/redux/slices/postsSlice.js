@@ -47,6 +47,15 @@ const postsSlice = createSlice({
     },
     deletePost(state,action){
       state.posts = state.posts.filter(post => post._id != action.payload.id)
+    },
+    addComment(state,action){
+      state.post.comments.push(action.payload)
+    },
+    editComment(state, action) {
+      
+      const editedComment = state.post.comments.filter(comment => comment._id == action.payload.id);
+      const index = state.post.comments.indexOf(editedComment)
+      state.post.comments[index] = state.action.payload.text
     }
     // setPostIsCreated(state, action) {
     //   (state.createPostProcess = true), (state.isLoading = true);

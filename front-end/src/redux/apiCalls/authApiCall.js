@@ -55,6 +55,7 @@ export function registerUser(user) {
         "userRegisteredMessage",
         JSON.stringify(response.data.message)
       );
+      console.log(response.data.message)
     } catch (error) {
       // Log any errors that occur during the API call
       toast.error(error.response.data.message);

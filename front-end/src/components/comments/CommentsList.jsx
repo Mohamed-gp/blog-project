@@ -1,9 +1,10 @@
 import { BsPencilSquare, BsTrash } from "react-icons/bs"
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
-import Moment from "react-moment"
+import { useEffect } from "react";
+import moment from "moment";
 
-const CommentsList = ({ setcommentPostModel, comments }) => {
+const CommentsList = ({ setcommentPostModel, comments, commentPostModel }) => {
     const user = useSelector(state => state.auth.user)
     const deleteCommentHandler = () => {
         Swal.fire({
@@ -41,18 +42,16 @@ const CommentsList = ({ setcommentPostModel, comments }) => {
                         <div className="flex items-center justify-between">
                             <p className="font-bold text-primary-color">{comment?.username}</p>
                             <div className="flex items-center gap-1 font-bold text-pumpkin-color">
-                                <Moment fromNow ago >
-                                    <p className="">{comment?.createdAt}</p>
-                                </Moment>
-                                 ago
+                                {moment(comment?.createdAt).fromNow(true)}
+                                <span> ago</span>
                             </div>
 
 
                         </div>
                         <p>{comment.text}</p>
-                        {comment._id === user?._id && (
+                        {comment.user == user?._id && (
                             <div className="flex justify-end gap-2" >
-                                <BsPencilSquare className="cursor-pointer text-green-color " onClick={() => { setcommentPostModel(prev => !prev) }} />
+                                <BsPencilSquare className="cursor-pointer text-green-color " onClick={() => { setcommentPostModel({id : comment._id}) }} />
                                 <BsTrash className="cursor-pointer text-red-color " onClick={() => { deleteCommentHandler() }} />
                             </div>
                         )}

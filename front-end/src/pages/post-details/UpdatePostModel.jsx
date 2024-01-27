@@ -1,14 +1,19 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { BsX, BsXCircle } from "react-icons/bs"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { toast } from "react-toastify"
 import { updatePostInfo } from "../../redux/apiCalls/postsApiCall"
+import { getCategories } from "../../redux/apiCalls/categoriesCall"
 
 const UpdatePostModel = ({ setisOpenModel , post }) => {
     const dispatch = useDispatch()
     const [postTitle,setpostTitle] = useState(post.title)
     const [postDescription,setpostDescription] = useState(post.description)
     const [postCategory,setpostCategory] = useState(post.category)
+    const categories = useSelector(state => state.categoriesReducer.categories)
+    useEffect(() => {
+        dispatch(getCategories())
+    })
     const formOnSubmitHandler = (e) => {
         e.preventDefault()
 
@@ -34,9 +39,9 @@ const UpdatePostModel = ({ setisOpenModel , post }) => {
                     <input onChange={(e) => {setpostTitle(e.target.value)}} value={postTitle} type="text" className="w-full h-10 pl-4 border border-solid rounded-xl" placeholder="Post Title"  />
                     <select value={postCategory} onChange={(e) => {setpostCategory(e.target.value)}} className="w-full h-10 pl-4 border border-solid rounded-xl" >
                         <option disabled >Select A Category</option>
-                        <option value="programming" >programming</option>
-                        <option value="sports" >sports</option>
-                        <option value="geography" >geography</option>
+                        {categories?.map(category => (
+                            <option value={category.title} key={category._id}>{category.title}</option>
+                        ))}
                     </select>
                     <textarea value={postDescription} onChange={(e) => {setpostDescription(e.target.value)}}  name="" id="" className="w-full pt-4 pl-4 border border-solid resize-none h-36 rounded-xl" placeholder="Post Description"></textarea>
                     <input type="submit" value="Update" className="self-end w-full h-10 font-bold text-white border border-solid rounded-xl bg-blue-color" />

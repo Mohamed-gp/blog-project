@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { BsFillHandThumbsUpFill, BsFillTrashFill, BsImageFill, BsPencilSquare } from "react-icons/bs";
 import Title from "../../components/title/Title";
 import { useEffect, useState } from "react";
@@ -76,6 +76,7 @@ const PostDetails = () => {
       }
     });
   }
+
   return (
     <>
       <div className="container px-6 my-6">
@@ -121,12 +122,14 @@ const PostDetails = () => {
 
 
           </div>
-          <AddComment />
-          <CommentsList setcommentPostModel={setcommentPostModel} comments={post?.comments} />
+          {user ? <AddComment postId={post._id} /> : <p className="p-3 mt-4 text-gray-600 border-2 border-black rounded-lg">Login First To Write A Comment <Link to="/login" className="font-bold text-red-700">Login</Link></p>}
+          <CommentsList setcommentPostModel={setcommentPostModel} comments={post?.comments} commentPostModel={commentPostModel} />
         </div>
       </div>
       {isOpenModel && <UpdatePostModel setisOpenModel={setisOpenModel} post={post} />}
-      {commentPostModel && <UpdateCommentModel setcommentPostModel={setcommentPostModel} />}
+      {commentPostModel && <UpdateCommentModel setcommentPostModel={setcommentPostModel} commentPostModel={commentPostModel}/>}
+
+
     </>
   )
 }

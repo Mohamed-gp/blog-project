@@ -65,7 +65,7 @@ const CreatePost = () => {
           <select value={postCategory} name="" id="" className="w-full h-10 pl-4 rounded-xl" onChange={(e) => { setpostCategory(e.target.value) }}>
             <option disabled >Select A Category</option>
             {categories?.map((category, index) => (
-              <option value={category?.title} defaultValue={index == 0} key={category?._id}>{category.title}</option>
+              <option value={category?.title} selected={index == 0} key={category?._id}>{category.title}</option>
             ))
 
             }

@@ -13,7 +13,6 @@ import { getCategories } from "../../redux/apiCalls/categoriesCall"
 const Home = () => {
   const dispatch = useDispatch()
   const posts = useSelector(state => state.postsReducer.posts)
-  let registeredMessage = useSelector(state => state.auth.registerUser)
   const categories = useSelector(state => state.categoriesReducer.categories)
 
 
@@ -26,14 +25,13 @@ const Home = () => {
   useEffect(() => {
     if (localStorage.getItem("userRegisteredMessage")) {
       Swal.fire({
-        title: registeredMessage,
-        text: registeredMessage,
+        title: localStorage.getItem("userRegisteredMessage"),
         icon: "success",
       })
     }
     localStorage.removeItem("userRegisteredMessage")
-  },[localStorage.getItem("userRegisteredMessage")])
-  
+  }, [localStorage.getItem("userRegisteredMessage")])
+
   return (
     <>
       <Hero />
