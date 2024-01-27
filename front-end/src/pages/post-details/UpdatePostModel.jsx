@@ -1,13 +1,17 @@
 import { useState } from "react"
 import { BsX, BsXCircle } from "react-icons/bs"
+import { useDispatch } from "react-redux"
 import { toast } from "react-toastify"
+import { updatePostInfo } from "../../redux/apiCalls/postsApiCall"
 
 const UpdatePostModel = ({ setisOpenModel , post }) => {
+    const dispatch = useDispatch()
     const [postTitle,setpostTitle] = useState(post.title)
     const [postDescription,setpostDescription] = useState(post.description)
     const [postCategory,setpostCategory] = useState(post.category)
     const formOnSubmitHandler = (e) => {
         e.preventDefault()
+
         if (postTitle.trim() === "") {
             return toast.error("invalid post title")
         }
@@ -17,7 +21,8 @@ const UpdatePostModel = ({ setisOpenModel , post }) => {
         if (postCategory.trim() === "") {
             return toast.error("invalid post category")
         }
-        return toast.success("post changed succefuly")
+        dispatch(updatePostInfo(post._id,{title : postTitle,description : postDescription,category : postCategory}))
+        
     }
     return (
         <>
@@ -34,7 +39,7 @@ const UpdatePostModel = ({ setisOpenModel , post }) => {
                         <option value="geography" >geography</option>
                     </select>
                     <textarea value={postDescription} onChange={(e) => {setpostDescription(e.target.value)}}  name="" id="" className="w-full pt-4 pl-4 border border-solid resize-none h-36 rounded-xl" placeholder="Post Description"></textarea>
-                    <input type="submit" value="Create" className="self-end w-full h-10 font-bold text-white border border-solid rounded-xl bg-blue-color" />
+                    <input type="submit" value="Update" className="self-end w-full h-10 font-bold text-white border border-solid rounded-xl bg-blue-color" />
                 </form>
                 <div onClick={() => {setisOpenModel(prev => !prev) }} className="absolute flex items-center justify-center w-8 h-8 text-white rounded-full cursor-pointer bg-red-color -top-4 -right-4">
                     <BsX className="text-3xl" />

@@ -109,13 +109,11 @@ const getAllPosts = asyncHandler(async (req, res) => {
  * @access public
  */
 const getPostById = asyncHandler(async (req, res) => {
-  const post = await Post.findById(req.params.id).populate("user comments", [
-    "-password",
-  ]);
+  const post = await Post.findById(req.params.id);
   if (!post) {
     return res.status(404).json({ message: "post not found" });
   }
-  res.status(200).json(post);
+  res.status(200).json(post.populate("user comments", ["-password"]));
 });
 
 /**
@@ -145,10 +143,6 @@ const deletePost = asyncHandler(async (req, res) => {
     await cloudinaryRemoveImage(post.image.publicId);
   }
   await Comment.deleteMany({ postId: post._id });
-  res.status(403).json({
-    message:
-      "you don't have the permission to delete only admin and user himself",
-  });
 });
 
 /**
@@ -158,6 +152,7 @@ const deletePost = asyncHandler(async (req, res) => {
  * @Route /api/posts/:id
  */
 const editPost = asyncHandler(async (req, res) => {
+  console.log(req.body, "this from edit post");
   const { error } = validateEditPost(req.body);
   if (error) {
     return res.status(400).json({ message: error.details[0].message });
@@ -181,9 +176,12 @@ const editPost = asyncHandler(async (req, res) => {
       },
     },
     { new: true }
-  )
-
-  res.status(200).json(updatedPost);
+  );
+  res.status(200).json({
+    title: updatedPost.title,
+    description: updatedPost.description,
+    category: updatedPost.category,
+  });
 });
 
 /**
@@ -234,7 +232,7 @@ const updatePostImage = asyncHandler(async (req, res) => {
 const toggleLike = asyncHandler(async (req, res) => {
   // get the post id and change the name of it from id to postId
   const { id: postId } = req.params;
-  
+
   let post = await Post.findById(postId);
   if (!post) {
     return res.status(404).json({ message: "no post found" });

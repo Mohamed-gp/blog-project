@@ -6,6 +6,7 @@ import { createPost } from "../../redux/apiCalls/postsApiCall"
 import { ThreeDots } from "react-loader-spinner"
 import { useNavigate } from "react-router-dom"
 import { postsAction } from "../../redux/slices/postsSlice"
+import { getCategories } from "../../redux/apiCalls/categoriesCall"
 
 const CreatePost = () => {
   const [postTitle, setpostTitle] = useState("")
@@ -16,6 +17,11 @@ const CreatePost = () => {
   // to do : creating then navigate to home for the ux
   //  const createdPost = useSelector(state => state.postsReducer.inProcess)
   const loading = useSelector(state => state.postsReducer.isLoading)
+
+  const categories = useSelector(state => state.categoriesReducer.categories)
+  useEffect(() => {
+    dispatch(getCategories())
+  }, [])
 
 
 
@@ -50,7 +56,7 @@ const CreatePost = () => {
 
   return (
     <>
-      <div className="px-6 contianer" style={{ height: "calc(100vh - (81px +  48px))" }}>
+      <div className="container px-6 create-post-container" style={{ height: "calc(100vh - (81px +  55px))" }}>
         <div className="text-center">
           <Title title="Create New Post" />
         </div>
@@ -58,9 +64,11 @@ const CreatePost = () => {
           <input value={postTitle} type="text" className="w-full h-10 pl-4 rounded-xl" placeholder="Post Title" onChange={(e) => { setpostTitle(e.target.value) }} />
           <select value={postCategory} name="" id="" className="w-full h-10 pl-4 rounded-xl" onChange={(e) => { setpostCategory(e.target.value) }}>
             <option disabled >Select A Category</option>
-            <option value="programming" selected >programming</option>
-            <option value="sports" >sports</option>
-            <option value="geography" >geography</option>
+            {categories?.map((category, index) => (
+              <option value={category?.title} defaultValue={index == 0} >{category.title}</option>
+            ))
+
+            }
           </select>
           <textarea value={postDescription} name="" id="" className="w-full pt-4 pl-4 resize-none h-36 rounded-xl" placeholder="Post Description" onChange={(e) => { setpostDescription(e.target.value) }}></textarea>
           <input type="file" name="file" id="file" className="w-full py-3 pl-4 cursor-pointer rounded-xl bg-gray-color" onChange={(e) => { setfile(e.target.files[0]) }} />

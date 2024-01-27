@@ -20,7 +20,7 @@ const Login = () => {
     dispatch(loginUser({email,password}))
   }
   return (
-    <div className="px-6 contianer" style={{ height: "calc(100vh - (72px +  48px))" ,display : "flex",justifyContent :"center",flexDirection : "column"}}>
+    <div className="px-6 contianer login-container-height" style={{ height: "calc(100vh - (72px +  48px))" ,display : "flex",justifyContent :"center",flexDirection : "column"}}>
       <div className="text-center">
         <Title title="Login" />
       </div>

@@ -9,10 +9,12 @@ import Swal from "sweetalert2";
 import UpdatePostModel from "./UpdatePostModel";
 import UpdateCommentModel from "../../components/comments/UpdateCommentModel";
 import { useDispatch, useSelector } from "react-redux";
-import { getPostById, getPosts, likeToggle } from "../../redux/apiCalls/postsApiCall";
+import { deletePost, getPostById, getPosts, likeToggle, updatePostImage } from "../../redux/apiCalls/postsApiCall";
+import { useNavigate } from "react-router-dom";
 
 
 const PostDetails = () => {
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const [isOpenModel, setisOpenModel] = useState(false)
   const [commentPostModel, setcommentPostModel] = useState(false)
@@ -26,19 +28,11 @@ const PostDetails = () => {
     window.scrollTo(0, 0)
   }, [])
 
-  // for liked user version styling 
-  const [userLiked,setuserLiked] = useState(false)
-  useEffect(() => {
-    if (post) {
-      const isLikedUser = post?.likes?.find(userLiked => userLiked == user._id)
-      isLikedUser ? setuserLiked(true) : setuserLiked(false)
-    }
-  },[post])
+  // for liked || unlike user 
 
   const toggleLikeHandler = () => {
     dispatch(likeToggle(post._id))
   }
-
 
 
   const updateImageSubmitHandler = (e) => {
@@ -46,7 +40,13 @@ const PostDetails = () => {
     if (!file) {
       return toast.warning("no file provided")
     }
-    return toast.success("image Uploaded seccefuly")
+
+
+
+    const formData = new FormData()
+    formData.append("image", file)
+    dispatch(updatePostImage(post._id, formData))
+
 
   }
   const deletePostHandler = () => {
@@ -60,11 +60,13 @@ const PostDetails = () => {
       confirmButtonText: "Yes, delete it!"
     }).then((result) => {
       if (result.isConfirmed) {
+        dispatch(deletePost(post._id))
         Swal.fire({
           title: "Deleted!",
           text: "Your post has been deleted.",
           icon: "success"
         });
+        navigate("/")
       } else {
         Swal.fire({
           title: "Cancelled",
@@ -105,17 +107,17 @@ const PostDetails = () => {
               <p className="text-gray-color">{new Date(post?.user?.createdAt).toDateString()}</p>
             </div>
           </div>
-          <p className="my-4">{post?.description} Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, dignissimos, odit natus incidunt libero autem commodi alias ea fugit debitis dolores quam aut, reprehenderit possimus earum praesentium nemo minus. Voluptatibus.</p>
+          <p className="my-4">{post?.description}</p>
           <div className={`flex items-center justify-between`}>
-            <div onClick={() => { toggleLikeHandler() }} className={`flex items-center w-fit mx-auto mr-0 bg-white px-[15px] rounded-3xl gap-2 text-blue-color py-1 text-xl ${userLiked ? "opacity-100" : "opacity-50"} cursor-pointer`}>
-              <p>{post?.likes?.length}</p>
-              <BsFillHandThumbsUpFill />
-            </div>
             {post?.user?._id === user?._id && (
-              <div className="flex items-center gap-1 text-2xl font-bold likes text-blue-color">
+              <div className="flex items-center gap-3 text-2xl font-bold likes text-blue-color">
                 <BsPencilSquare className="cursor-pointer text-green-color" onClick={() => { setisOpenModel(prev => !prev) }} />
                 <BsFillTrashFill className="cursor-pointer text-red-color" onClick={() => { deletePostHandler() }} />
               </div>)}
+            <div onClick={() => { toggleLikeHandler() }} className={`flex items-center w-fit mx-auto mr-0 bg-white px-[15px] rounded-3xl gap-2 text-blue-color py-1 text-xl ${post?.likes?.includes(user?._id) ? "opacity-100" : "opacity-50"} cursor-pointer`}>
+              <BsFillHandThumbsUpFill />
+              <p>{post?.likes?.length}</p>
+            </div>
 
 
           </div>

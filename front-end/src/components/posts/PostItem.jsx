@@ -12,7 +12,7 @@ const PostItem = ({ post }) => {
             <strong className="text-green-sea-color">
               Author:
             </strong>
-            <Link to="/profile/1" className="font-medium capitalize text-primary-color" >{post?.user?.username}</Link>
+            <Link to={`/profile/${post.user.id}`} className="font-medium capitalize text-primary-color" >{post?.user?.username}</Link>
           </div>
           <div className="font-bold post-date text-green-sea-color">
             {new Date(post?.createdAt).toDateString()}

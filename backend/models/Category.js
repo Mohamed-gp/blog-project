@@ -2,11 +2,11 @@ const mongoose = require("mongoose")
 const joi = require("joi")
 
 const CategorySchema = new mongoose.Schema({
-    user : {
-        type : mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true
-    },
+    // user : {
+    //     type : mongoose.Schema.Types.ObjectId,
+    //     ref: "User",
+    //     required: true
+    // },
     title : {
         type : String,
         required: true,

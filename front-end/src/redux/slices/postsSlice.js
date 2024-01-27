@@ -38,6 +38,15 @@ const postsSlice = createSlice({
     },
     setLikes(state,action){
       state.post.likes = action.payload
+    },
+    setpostinfo(state,action){
+      const {title,category,description } = action.payload
+      state.post.title = title
+      state.post.category = category
+      state.post.description = description
+    },
+    deletePost(state,action){
+      state.posts = state.posts.filter(post => post._id != action.payload.id)
     }
     // setPostIsCreated(state, action) {
     //   (state.createPostProcess = true), (state.isLoading = true);

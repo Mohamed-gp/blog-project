@@ -74,20 +74,77 @@ export function getPostById(id) {
   };
 }
 
-
-export function likeToggle (postId){
-  return async (dispatch,getState) => {
+export function likeToggle(postId) {
+  return async (dispatch, getState) => {
     try {
-      const { data } = await request.put(`/api/posts/likes/${postId}`,null,{
+      const { data } = await request.put(`/api/posts/likes/${postId}`, null, {
         headers: {
           Authorization: "Bearer " + getState().auth.user.token,
-          "Content-Type": "multipart/form-data",
         },
       });
       dispatch(postsAction.setLikes(data.likes));
     } catch (error) {
-      toast.error(error.response.data.message)
-      console.log(error.response.data.message)
+      toast.error(error.response.data.message);
+      console.log(error.response.data.message);
+    }
+  };
+}
+
+export function updatePostImage(id, postImage) {
+  return async (dispatch, getState) => {
+    try {
+      const { data } = await request.put(
+        `/api/posts/upload-image/${id}`,
+        postImage,
+        {
+          headers: {
+            Authorization: "Bearer " + getState().auth.user.token,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      return toast.success("image Uploaded successfully");
+    } catch (error) {
+      console.log(error.response.data.message);
+      toast.error(error.response.data.message);
+    }
+  };
+}
+
+export function updatePostInfo(postId, postInfo) {
+  return async (dispatch, getState) => {
+    try {
+      const { data } = await request.put(`/api/posts/${postId}`, postInfo, {
+        headers: {
+          Authorization: "Bearer " + getState().auth.user.token,
+        },
+      });
+      dispatch(postsAction.setpostinfo(data));
+      toast.success("Post Info Changed Successfully");
+    } catch (error) {
+      console.log(error.response.data.message);
+      toast.error(error.response.data.message);
+    }
+  };
+}
+
+
+export function deletePost (postId) {
+  return async (dispatch,getState) => {
+    try {
+      const { data } = await request.delete(`/api/posts/${postId}`,{
+        headers: {
+          Authorization: "Bearer " + getState().auth.user.token,
+        },
+      });
+
+      dispatch(postsAction.deletePost({id : postId}))
+      
+
+    } catch (error) {
+      console.log(error.response.data.message);
+      toast.error(error.response.data.message);
     }
   }
 } 

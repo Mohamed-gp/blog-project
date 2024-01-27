@@ -142,3 +142,18 @@ table div {
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
   }
 }
+
+
+/* for create post height */
+@media (min-width: 1024px)  {
+  .create-post-container {
+    height: calc(100vh - calc(80px + 48px)) !important;
+  }
+  
+}
+@media (max-width: 1023px)  {
+  .create-post-container {
+    height: calc(100vh - calc(67px + 49px)) !important;
+  }
+  
+}

@@ -3,9 +3,9 @@ import Pagination from "../../components/pagination/Pagination"
 import Posts from "../../components/posts/Posts"
 import SideBarPosts from "../../components/side-bar-posts/SideBarPosts"
 import Title from "../../components/title/Title"
-import { categories, posts } from "../../dummyData"
 import { useDispatch, useSelector } from "react-redux"
 import { getPosts, getPostsCount } from "../../redux/apiCalls/postsApiCall"
+import { getCategories } from "../../redux/apiCalls/categoriesCall"
 
 
 
@@ -15,9 +15,12 @@ const PostsPage = () => {
   const [currentPage, setcurrentPage] = useState(1)
   useEffect(() => {
     window.scrollTo(0, 0)
+    dispatch(getCategories())
   },[])
   const posts = useSelector(state => state.postsReducer.posts)
   const postsCount = useSelector(state => state.postsReducer.postsCount)
+  const categories = useSelector(state => state.categoriesReducer.categories)
+  
   useEffect(() => {
     dispatch(getPosts(currentPage))
   },[currentPage])

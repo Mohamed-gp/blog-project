@@ -14,11 +14,12 @@ const Profile = () => {
     const [file, setfile] = useState(null)
     const { id } = useParams()
     const profile = useSelector(state => state.profile.profileInfo)
+    const user = useSelector(state => state.auth.user)
+    console.log(profile)
     useEffect(() => {
         window.scrollTo(0, 0)
         dispatch(getUserProfile(id))
     }, [id])
-
 
     const formSubmitHandler = (e) => {
         e.preventDefault()
@@ -56,6 +57,7 @@ const Profile = () => {
             }
         });
     }
+
     return (
         <>
             <div>
@@ -92,11 +94,16 @@ const Profile = () => {
                     </div>
                     <p className="py-6 text-3xl font-bold">{profile?.username} Posts</p>
                     {profile?.posts?.length >= 1 ? <Posts posts={profile?.posts} /> : <p>there is no posts found</p>}
-                    <p className="text-2xl font-bold underline text-red-color">Danger Zone :</p>
-                    <p className="my-2"><span className="font-bold text-red-color">note:</span> Once you delete your account, there is no going back. Please be certain.</p>
-                    <div className="flex justify-end">
-                        <button onClick={() => { deleteHandler() }} className="px-2 py-1 text-xl font-bold border-2 cursor-pointer w-fit text-red-color border-red-color rounded-xl ">Delete Your Account</button>
-                    </div>
+                    {user?._id == id &&
+                        (<>
+                            <p className="text-2xl font-bold underline text-red-color">Danger Zone :</p>
+                            <p className="my-2"><span className="font-bold text-red-color">note:</span> Once you delete your account, there is no going back. Please be certain.</p>
+                            <div className="flex justify-end">
+                                <button onClick={() => { deleteHandler() }} className="px-2 py-1 text-xl font-bold border-2 cursor-pointer w-fit text-red-color border-red-color rounded-xl ">Delete Your Account</button>
+                            </div>
+                        </>
+                        )
+                    }
                 </div>
                 {isOpenModel && <UpdateProfileModel setisOpenModel={setisOpenModel} profile={profile} />}
             </div>
