@@ -23,7 +23,7 @@ export const createComment = (text, postid) => {
   return async (dispatch, getState) => {
     try {
       const { data } = await request.post(
-        "api/comments",
+        "/api/comments",
         { text, postId: postid },
         {
           headers: {

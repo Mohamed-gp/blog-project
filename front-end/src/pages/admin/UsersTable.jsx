@@ -1,10 +1,19 @@
 import Swal from "sweetalert2";
 import AdminSideBar from "./AdminSideBar"
 import { Link } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { deleteUser, getUsers } from "../../redux/apiCalls/adminApiCall";
 
 const UsersTable = () => {
+    const dispatch = useDispatch()
+    const users = useSelector(state => state.adminReducer.users)
 
-    const removeHandler = () => {
+    useEffect(() => {
+        dispatch(getUsers())
+    })
+
+    const removeHandler = (userId) => {
         Swal.fire({
             title: "Are you sure to remove this user?",
             text: "You won't be able to revert this!",
@@ -15,6 +24,7 @@ const UsersTable = () => {
             confirmButtonText: "Yes, delete it!"
           }).then((result) => {
             if (result.isConfirmed) {
+                dispatch(deleteUser(userId))
               Swal.fire({
                 title: "Deleted!",
                 text: "The user has been deleted.",
@@ -46,24 +56,24 @@ const UsersTable = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {[1,2,3,4,5].map(item => (
-                                <tr key={item}>
-                                    <td>{item}</td>
+                            {users?.map((item,index) => (
+                                <tr key={item._id}>
+                                    <td>{index + 1}</td>
                                     <td>
-                                        <div className="flex items-center justify-start pl-4 gap-2 img w-[260px]">
+                                        <div className="flex items-center justify-start pl-4 gap-2 img min-w-[260px]">
                                             <img className="w-10 rounded-full" src="/assets/images/user-avatar.png" />
-                                            <span>Youcef Abbas</span>
+                                            <span>{item?.username}</span>
                                         </div>
                                     </td>
-                                    <td>mohamedterba@gmail.com</td>
+                                    <td>{item?.email}</td>
                                     <td>
                                         <div className="flex items-center justify-center gap-2 text-white w-[260px]">
                                             <button className="px-3 py-1 bg-green-400 rounded-xl">
-                                                <Link to={`/profile`}>
+                                                <Link to={`/profile/${item._id}`}>
                                                     View Profile
                                                 </Link>
                                             </button>
-                                            <button className="px-3 py-1 bg-red-400 rounded-xl" onClick={() => removeHandler()}>
+                                            <button className="px-3 py-1 bg-red-400 rounded-xl" onClick={() => removeHandler(item._id)}>
                                                 <Link >
                                                     Delete Profile
                                                 </Link>

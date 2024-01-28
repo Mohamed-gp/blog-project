@@ -70,6 +70,9 @@ const addPost = asyncHandler(async (req, res) => {
 const getAllPosts = asyncHandler(async (req, res) => {
   const postsPerPage = 3;
   const { pageNumber, category } = req.query;
+  if (category) {
+    category[0] = category[0].toUpperCase()
+  }
   // if (category && pageNumber) {
   //   const posts = await Post.find({category : category}).limit(postsPerPage).skip((pageNumber - 1) * postsPerPage)
   //   return res.status(200).json(posts)
@@ -91,7 +94,7 @@ const getAllPosts = asyncHandler(async (req, res) => {
       .sort({ createdAt: -1 })
       .populate("user comments", ["-password"]);
   } else if (category) {
-    posts = await Post.find({ category })
+    posts = await Post.find({ category : category })
       .sort({ createdAt: -1 })
       .populate("user comments", ["-password"]);
   } else {
@@ -109,7 +112,9 @@ const getAllPosts = asyncHandler(async (req, res) => {
  * @access public
  */
 const getPostById = asyncHandler(async (req, res) => {
-  const post = await Post.findById(req.params.id).populate("user comments", ["-password"]);
+  const post = await Post.findById(req.params.id).populate("user comments", [
+    "-password",
+  ]);
   if (!post) {
     return res.status(404).json({ message: "post not found" });
   }

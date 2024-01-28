@@ -40,7 +40,7 @@ const createComment = asyncHandler(async (req, res) => {
  * @method get
  */
 const getAllComments = asyncHandler(async (req,res) => {
-    const comments = await Comment.find().countDocuments()
+    const comments = await Comment.find({}).populate("user")
     res.status(200).json(comments)
 });
 

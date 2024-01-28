@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const joi = require("joi");
 const jwt = require("jsonwebtoken");
+const joiPasswordComplexity = require("joi-password-complexity")
 
 const UserSchema = new mongoose.Schema(
   {
@@ -9,14 +10,14 @@ const UserSchema = new mongoose.Schema(
       required: true,
       trim: true,
       minlength: 2,
-      maxlength: 100,
+      maxlength: 20,
     },
     email: {
       type: String,
       required: true,
       trim: true,
       minlength: 5,
-      maxlength: 100,
+      maxlength: 50,
       unique: true,
     },
     password: {
@@ -61,9 +62,9 @@ const User = mongoose.model("user", UserSchema); // mongo db will add s and make
 
 const verifySignUp = (object) => {
   const emailSchema = joi.object({
-    username: joi.string().required().trim().min(2).max(100),
-    email: joi.string().required().trim().min(5).max(100).email(),
-    password: joi.string().required().trim().min(8).max(100),
+    username: joi.string().required().trim().min(2).max(20),
+    email: joi.string().required().trim().min(5).max(50).email(),
+    password: joiPasswordComplexity().required(),
     // profilePhoto: joi.object().default({
     //     url : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png ",
     //     publicId: null,
@@ -77,7 +78,7 @@ const verifySignUp = (object) => {
 };
 const verifyLogin = (obj) => {
   const loginSchema = joi.object({
-    email: joi.string().required().trim().min(5).max(100).email(),
+    email: joi.string().required().trim().min(5).max(50).email(),
     password: joi.string().required().trim().min(8).max(100),
   });
 
@@ -86,8 +87,8 @@ const verifyLogin = (obj) => {
 
 const verifyUpdateUser = (obj) => {
   const schema = joi.object({
-    username: joi.string().trim().min(2).max(100),
-    password: joi.string().trim().min(8),
+    username: joi.string().trim().min(2).max(20),
+    password: joiPasswordComplexity(),
     bio: joi.string(),
   });
   return schema.validate(obj);

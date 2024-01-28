@@ -2,9 +2,17 @@ import Swal from "sweetalert2";
 import AdminSideBar from "./AdminSideBar"
 import { Link } from "react-router-dom";
 import {posts} from "../../dummyData"
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { deletePost, getAllPosts } from "../../redux/apiCalls/adminApiCall";
 
 const PostsTable = () => {
-    const removeHandler = () => {
+    const dispatch = useDispatch()
+    const posts = useSelector(state => state.adminReducer.posts)
+    useEffect(() => {
+        dispatch(getAllPosts())
+    })
+    const removeHandler = (postId) => {
         Swal.fire({
             title: "Are you sure to remove this user?",
             text: "You won't be able to revert this!",
@@ -15,6 +23,7 @@ const PostsTable = () => {
             confirmButtonText: "Yes, delete it!"
           }).then((result) => {
             if (result.isConfirmed) {
+                dispatch(deletePost(postId))
               Swal.fire({
                 title: "Deleted!",
                 text: "The user has been deleted.",
@@ -35,7 +44,7 @@ const PostsTable = () => {
         <div className="flex" style={{ minHeight: "calc(100vh - (72px +  48px))" }}>
             <AdminSideBar />
             <div className="flex flex-col justify-center w-full overflow-x-auto overflow-y-hidden ">
-                <p className="pl-4 mx-2 mt-[2.1rem] text-2xl">Users</p>
+                <p className="pl-4 mx-2 mt-[2.1rem] text-2xl">Posts</p>
                 <div className="mx-6 w-[1000px] min-h-[330px] text-center my-2  ">
                     <table className="w-full h-full ">
                         <thead>
@@ -60,11 +69,11 @@ const PostsTable = () => {
                                     <td>
                                         <div className="flex items-center justify-center gap-2 text-white w-[260px]">
                                             <button className="px-3 py-1 bg-green-400 rounded-xl">
-                                                <Link to={`/posts/details/${index + 1}`}>
+                                                <Link to={`/posts/details/${post._id}`}>
                                                     View post
                                                 </Link>
                                             </button>
-                                            <button className="px-3 py-1 bg-red-400 rounded-xl" onClick={() => removeHandler()}>
+                                            <button className="px-3 py-1 bg-red-400 rounded-xl" onClick={() => removeHandler(post._id)}>
                                                 <Link >
                                                     Delete Post
                                                 </Link>

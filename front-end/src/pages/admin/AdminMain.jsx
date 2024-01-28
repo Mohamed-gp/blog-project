@@ -4,20 +4,19 @@ import AdminCardLink from "./AdminCardLink"
 import { useEffect } from "react"
 import { getCategories } from "../../redux/apiCalls/categoriesCall"
 import { getPostsCount } from "../../redux/apiCalls/postsApiCall"
-import { getCommentsCount, getUsersCount } from "../../redux/apiCalls/adminApiCall"
+import { getComments, getUsersCount } from "../../redux/apiCalls/adminApiCall"
 const AdminMain = () => {
     const dispatch = useDispatch()
     const categories = useSelector(state => state.categoriesReducer.categories)
     const postsCount = useSelector(state => state.postsReducer.postsCount)
     const usersCount = useSelector(state => state.adminReducer.usersCount)
-    const commentsCount = useSelector(state => state.adminReducer.commentsCount)
-    
+    const comments = useSelector(state => state.adminReducer.comments)
     
     useEffect(() => {
         dispatch(getCategories())
         dispatch(getPostsCount())
         dispatch(getUsersCount())
-        dispatch(getCommentsCount())
+        dispatch(getComments())
     },[])
     return (
 
@@ -27,7 +26,7 @@ const AdminMain = () => {
                 <AdminCardLink link="users" count={usersCount} />
                 <AdminCardLink link="posts" count={postsCount} />
                 <AdminCardLink link="categories" count={categories?.length} />
-                <AdminCardLink link="comments" count={commentsCount} />
+                <AdminCardLink link="comments" count={comments?.length} />
             </div>
             <div className="my-5">
                 <AddNewCategory />

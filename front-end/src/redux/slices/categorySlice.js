@@ -12,6 +12,10 @@ const categorySlice = createSlice({
         },
         createCategory(state,action){
             state.categories.push(action.payload.data)
+        },
+        removeCate(state,action){
+            filteredCate = state.categories.filter(category => category._id != action.payload.id) 
+            state.categories = filteredCate
         }
     }
 

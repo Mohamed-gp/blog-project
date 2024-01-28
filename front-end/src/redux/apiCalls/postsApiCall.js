@@ -30,7 +30,9 @@ export function getPostsCount() {
 export function getPostBasedCate(category) {
   return async (dispatch) => {
     try {
-      const { data } = await request.get(`/api/posts?&category=${category}`);
+      console.log(category.toLowerCase(),"from based")
+      const { data } = await request.get(`/api/posts?category=${category.toLowerCase()}`);
+      console.log(data)
       dispatch(postsAction.setPostsCate(data));
     } catch (error) {
       console.log(error.response.data.message);
