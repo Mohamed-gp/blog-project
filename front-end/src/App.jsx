@@ -41,7 +41,7 @@ function App() {
             <Route path='categories/:category' element={<Category />} />
           </Route>
           <Route path='/admin-dashboard'>
-            <Route index element={!user?.isAdmin ? <Navigate to="/"/> : <UsersTable />} />
+            <Route index element={!user?.isAdmin ? <Navigate to="/"/> : <AdminDashboard />} />
             <Route path='users-table' element={!user?.isAdmin ? <Navigate to="/"/> : <UsersTable />} />
             <Route path='comments-table' element={!user?.isAdmin ? <Navigate to="/"/> : <CommentsTable />} />
             <Route path='posts-table' element={!user?.isAdmin ? <Navigate to="/"/> : <PostsTable />} />

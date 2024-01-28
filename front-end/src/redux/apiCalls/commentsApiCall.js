@@ -43,7 +43,7 @@ export const createComment = (text, postid) => {
 export const editComment = (text, commentId) => {
   return async (dispatch, getState) => {
     try {
-      const {data} = await request.put(
+      const { data } = await request.put(
         `/api/comments/${commentId}`,
         { text },
         {
@@ -52,11 +52,29 @@ export const editComment = (text, commentId) => {
           },
         }
       );
-      dispatch(postsAction.editComment({text,editedCommentId : data._id }));
+      dispatch(
+        postsAction.editComment({ text: data.text, editedCommentId: data._id })
+      );
       toast.success("post changed succefuly");
     } catch (error) {
-        toast.error(error.response.data.message);
-        console.log(error.response.data.message);
+      console.log(error.response.data.message);
+      toast.error(error.response.data.message);
+    }
+  };
+};
+
+export const deleteComment = (commentId) => {
+  return async (dispatch, getState) => {
+    try {
+      const {data} = await request.delete(`/api/comments/${commentId}`,{
+        headers : {
+          Authorization : "Bearer " + getState().auth.user.token
+        }
+      })
+      dispatch(postsAction.deleteCommentFromPost({id : commentId}))
+    } catch (error) {
+      console.log(error.response.data.message);
+      toast.error(error.response.data.message);
     }
   };
 };

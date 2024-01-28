@@ -15,7 +15,6 @@ const Profile = () => {
     const { id } = useParams()
     const profile = useSelector(state => state.profile.profileInfo)
     const user = useSelector(state => state.auth.user)
-    console.log(profile)
     useEffect(() => {
         window.scrollTo(0, 0)
         dispatch(getUserProfile(id))
@@ -68,13 +67,16 @@ const Profile = () => {
                                 <form onSubmit={formSubmitHandler} className="relative img">
                                     <div className="relative mx-auto w-fit">
                                         <img src={file ? URL.createObjectURL(file) : profile?.profilePhoto.url} alt="" className="object-cover w-20 h-20 mx-auto overflow-hidden rounded-full" />
-                                        <div className="absolute bottom-0 flex items-center gap-1 right-[-85px]">
-                                            <label htmlFor="file" className="flex items-center justify-center p-1 text-2xl bg-white rounded-full cursor-pointer text-primary-color">
-                                                <BsCameraFill />
-                                            </label>
-                                            <button type="submit" className="px-2 text-base font-bold bg-white rounded-lg cursor-pointer text-primary-color">Upload</button>
-                                            <input type="file" id="file" className="hidden" onChange={(e) => { setfile(e.target.files[0]) }} />
-                                        </div>
+                                        {profile?._id == user?._id && (
+                                            <div className="absolute bottom-0 flex items-center gap-1 right-[-85px]">
+                                                <label htmlFor="file" className="flex items-center justify-center p-1 text-2xl bg-white rounded-full cursor-pointer text-primary-color">
+                                                    <BsCameraFill />
+                                                </label>
+                                                <button type="submit" className="px-2 text-base font-bold bg-white rounded-lg cursor-pointer text-primary-color">Upload</button>
+                                                <input type="file" id="file" className="hidden" onChange={(e) => { setfile(e.target.files[0]) }} />
+                                            </div>
+                                        )
+                                        }
                                     </div>
                                 </form>
                                 <p className="my-2 text-4xl font-bold">{profile?.username}</p>
@@ -92,16 +94,17 @@ const Profile = () => {
                             </div>
                         </div>
                     </div>
-                    <p className="py-6 text-3xl font-bold">{profile?.username} Posts</p>
-                    {profile?.posts?.length >= 1 ? <Posts posts={profile?.posts} /> : <p>there is no posts found</p>}
+                    <p className="py-6 my-3 text-3xl font-bold text-[#3d2d1d] underline">Posts : </p>
+                    {profile?.posts?.length >= 1 ? <Posts posts={profile?.posts} /> : <p className="mx-auto text-2xl font-bold border-[2px] rounded-lg w-fit text-[#b10000] py-2 px-4 border-[#b10000] border-solid">There Is No Posts Found</p>}
                     {user?._id == id &&
-                        (<>
+                        (<div className="my-8">
+
                             <p className="text-2xl font-bold underline text-red-color">Danger Zone :</p>
                             <p className="my-2"><span className="font-bold text-red-color">note:</span> Once you delete your account, there is no going back. Please be certain.</p>
                             <div className="flex justify-end">
                                 <button onClick={() => { deleteHandler() }} className="px-2 py-1 text-xl font-bold border-2 cursor-pointer w-fit text-red-color border-red-color rounded-xl ">Delete Your Account</button>
                             </div>
-                        </>
+                        </div>
                         )
                     }
                 </div>

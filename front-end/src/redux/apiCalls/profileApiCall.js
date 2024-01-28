@@ -63,8 +63,6 @@ export function editUserProfile(id, info) {
   };
 }
 
-
-
 // this function are not working for sure because i don't try them with the front
 export function deleteUser(id) {
   return async (dispatch, getState) => {
@@ -74,17 +72,18 @@ export function deleteUser(id) {
           Authorization: "Bearer " + getState().auth.user.token,
         },
       });
-      localStorage.removeItem("userInfo")
-      localStorage.removeItem("profileInfo")
-      dispatch(profileAction.setProfileStoreNull())
-      dispatch(authActions.setUserStoreNull())
-      
+      localStorage.removeItem("userInfo");
+      localStorage.removeItem("profileInfo");
+      dispatch(profileAction.setProfileStoreNull());
+      dispatch(authActions.setUserStoreNull());
     } catch (error) {
       toast.error(error.response.data.message);
       console.log(error.response.data.message);
     }
   };
 }
+
+
 
 /* 
 

@@ -4,6 +4,7 @@ const profileSlice = createSlice({
   name: "profile",
   initialState: {
     profileInfo: null,
+
   },
   reducers: {
     setProfile(state, action) {

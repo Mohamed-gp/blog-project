@@ -52,17 +52,17 @@ const postsSlice = createSlice({
       state.post.comments.push(action.payload)
     },
     editComment(state, action) {
-      
-      const editedComment = state.post.comments.filter(comment => comment._id == action.payload.id);
-      const index = state.post.comments.indexOf(editedComment)
-      state.post.comments[index] = state.action.payload.text
+      state.post.comments.map(comment => {
+        if (comment._id == action.payload.editedCommentId) {
+          comment.text = action.payload.text
+          comment.edited = true
+        }
+      })
+    },
+    deleteCommentFromPost(state,action){
+      const commentsfiltered = state.post.comments.filter(comment => comment._id != action.payload.id)
+      state.post.comments = commentsfiltered
     }
-    // setPostIsCreated(state, action) {
-    //   (state.createPostProcess = true), (state.isLoading = true);
-    // },
-    // setCreatedSucc (state,action){
-    //     state.isPostCreated = true
-    // }
   },
 });
 

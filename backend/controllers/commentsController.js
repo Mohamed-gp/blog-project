@@ -40,8 +40,7 @@ const createComment = asyncHandler(async (req, res) => {
  * @method get
  */
 const getAllComments = asyncHandler(async (req,res) => {
-    const comments = await Comment.find().populate("user")
-
+    const comments = await Comment.find().countDocuments()
     res.status(200).json(comments)
 });
 
@@ -92,7 +91,7 @@ const updateComment = asyncHandler(async (req,res) => {
       text : req.body.text
     }
   },{new : true})
-  res.status(200).json(updateComment)
+  res.status(200).json(updatedComment)
 })
 
 

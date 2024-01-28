@@ -1,12 +1,15 @@
 import { BsPencilSquare, BsTrash } from "react-icons/bs"
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { useEffect } from "react";
 import moment from "moment";
+import { deleteComment } from "../../redux/apiCalls/commentsApiCall";
 
 const CommentsList = ({ setcommentPostModel, comments, commentPostModel }) => {
     const user = useSelector(state => state.auth.user)
-    const deleteCommentHandler = () => {
+    const dispatch = useDispatch()
+    
+    const deleteCommentHandler = (id) => {
         Swal.fire({
             title: "Are you sure to delete your comment?",
             text: "You won't be able to revert this!",
@@ -17,9 +20,10 @@ const CommentsList = ({ setcommentPostModel, comments, commentPostModel }) => {
             confirmButtonText: "Yes, delete the comment!"
         }).then((result) => {
             if (result.isConfirmed) {
+                dispatch(deleteComment(id))
                 Swal.fire({
                     title: "Deleted!",
-                    text: "Your post has been deleted.",
+                    text: "Your comment has been deleted.",
                     icon: "success"
                 });
             }
@@ -40,7 +44,10 @@ const CommentsList = ({ setcommentPostModel, comments, commentPostModel }) => {
                     // todo profile picture or let say like youtube comments
                     <div key={comment?._id} className="flex flex-col gap-3 p-4 border-2 border-black rounded-xl">
                         <div className="flex items-center justify-between">
-                            <p className="font-bold text-primary-color">{comment?.username}</p>
+                            <div className="flex items-center gap-1">
+                                <p className="font-bold text-primary-color">{comment?.username}</p>
+                                {comment?.edited && <p className="text-sm font-bold text-pumpkin-color">(Edited)</p>}
+                            </div>
                             <div className="flex items-center gap-1 font-bold text-pumpkin-color">
                                 {moment(comment?.createdAt).fromNow(true)}
                                 <span> ago</span>
@@ -51,8 +58,8 @@ const CommentsList = ({ setcommentPostModel, comments, commentPostModel }) => {
                         <p>{comment.text}</p>
                         {comment.user == user?._id && (
                             <div className="flex justify-end gap-2" >
-                                <BsPencilSquare className="cursor-pointer text-green-color " onClick={() => { setcommentPostModel({id : comment._id}) }} />
-                                <BsTrash className="cursor-pointer text-red-color " onClick={() => { deleteCommentHandler() }} />
+                                <BsPencilSquare className="cursor-pointer text-green-color " onClick={() => { setcommentPostModel({ id: comment._id }) }} />
+                                <BsTrash className="cursor-pointer text-red-color " onClick={() => { deleteCommentHandler(comment._id) }} />
                             </div>
                         )}
                     </div>

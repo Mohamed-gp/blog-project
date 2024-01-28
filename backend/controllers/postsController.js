@@ -109,11 +109,11 @@ const getAllPosts = asyncHandler(async (req, res) => {
  * @access public
  */
 const getPostById = asyncHandler(async (req, res) => {
-  const post = await Post.findById(req.params.id);
+  const post = await Post.findById(req.params.id).populate("user comments", ["-password"]);
   if (!post) {
     return res.status(404).json({ message: "post not found" });
   }
-  res.status(200).json(post.populate("user comments", ["-password"]));
+  res.status(200).json(post);
 });
 
 /**

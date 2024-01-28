@@ -29,7 +29,7 @@ const Login = () => {
         <input value={email} id="email" type="text" className="w-full h-10 pl-4 rounded-xl" placeholder="Your email" onChange={(e) => { setemail(e.target.value) }} />
         <label className="w-full font-bold" htmlFor="password">Password : </label>
         <input value={password} id="password" type="password" className="w-full h-10 pl-4 rounded-xl" placeholder="Your password" onChange={(e) => { setpassword(e.target.value) }} />
-        <input type="submit" value="Create" className="w-full h-10 font-bold text-white rounded-xl bg-blue-color" />
+        <input type="submit" value="Login" className="w-full h-10 font-bold text-white rounded-xl bg-blue-color" />
       </form>
       <div className="flex justify-center gap-3 my-6 text-center ">
         <Link to="/register" className="font-bold duration-500 text-primary-color hover:text-blue-color">Create Account</Link>

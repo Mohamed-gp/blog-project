@@ -80,7 +80,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 
 /**
  * @desc get users count
- * @route /api/users/counter
+ * @route /api/users/count
  * @access private only admin
  * @method GET
  */

@@ -10,6 +10,9 @@ const categorySlice = createSlice({
         setCate(state,action){
             state.categories = action.payload
         },
+        createCategory(state,action){
+            state.categories.push(action.payload.data)
+        }
     }
 
 })
