@@ -1,4 +1,4 @@
-name: Deploy Krelli App to VPS
+name: Deploy blog App to VPS
 
 on:
   push:
