@@ -5,11 +5,11 @@ const cors = require("cors");
 const { notFound, errorHandler } = require("./middlewares/error");
 const { User } = require("./models/User");
 const { Post } = require("./models/Post");
-const xss = require("xss-clean")
-const rateLimiting = require("express-rate-limit")
-const helmet = require("helmet")
-const hpp = require("hpp")
-
+const cookieParser = require("cookie-parser");
+const xss = require("xss-clean");
+const rateLimiting = require("express-rate-limit");
+const helmet = require("helmet");
+const hpp = require("hpp");
 
 // connection to DB
 connectToDB();
@@ -19,23 +19,33 @@ const app = express();
 
 // middlewares
 app.use(express.json());
+app.use(cookieParser());
 
 // http param pulution
-app.use(hpp())
+app.use(hpp());
 
 // security headers
-app.use(helmet())
+app.use(helmet());
 // prevent xss attack
 
-app.use(xss())
+app.use(xss());
 
-app.use(rateLimiting({
-    windowMs : 10 * 60 * 1000 ,
-    max : 100,
-}))
+app.use(
+  rateLimiting({
+    windowMs: 10 * 60 * 1000,
+    max: 1000,
+  })
+);
 // cors before route because front end is another domain he need to acces it
-app.use(cors());
-
+app.use(
+  cors({
+    origin:
+      process.env.NODE_ENV === "production"
+        ? ["https://blog.production-server.tech/"]
+        : ["http://localhost:5004"],
+    credentials: true,
+  })
+);
 
 // routes
 
@@ -58,7 +68,7 @@ app.use("/api/categories", require("./routes/categoryRouter"));
 app.use(notFound);
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 9000;
+const PORT = process.env.PORT || 3004;
 app.listen(PORT, () => {
-  console.log(`server is running in ${process.env.Node_ENV} at port ${PORT}`);
+  console.log(`server is running in ${process.env.NODE_ENV} at port ${PORT}`);
 });

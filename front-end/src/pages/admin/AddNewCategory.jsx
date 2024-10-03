@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useDispatch } from "react-redux"
-import { toast } from "react-toastify"
+import { toast } from "react-hot-toast"
 import { createCategory } from "../../redux/apiCalls/adminApiCall"
 
 const AddNewCategory = () => {
@@ -18,7 +18,7 @@ const AddNewCategory = () => {
             <p className="font-bold">Add New Category</p>
             <label htmlFor="categoryTitle" className="text-sm text-primary-color" >Category Title</label>
             <input value={category} onChange={(e) => {setcategory(e.target.value)}} type="text" id="categoryTitle" className="w-full h-10 pl-4 rounded-xl" placeholder="Enter Category Title" />
-            <input type="submit"  className="w-full h-10 font-bold text-white rounded-xl bg-green-color" />
+            <input type="submit" value={"submit"}  className="w-full h-10 font-bold text-white rounded-xl bg-green-color cursor-pointer" />
         </form>
     )
 }

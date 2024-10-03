@@ -1,4 +1,4 @@
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import request from "../../utils/request";
 import { profileAction } from "../slices/profileSlice";
 import { authActions } from "../slices/authSlice";
@@ -17,21 +17,24 @@ export function getUserProfile(id) {
 export function updateUserPhotoProfile(image) {
   return async (dispatch, getState) => {
     try {
+      // const { data } = await request.post(
+      //   "/api/users/profile/profile-photo-upload",
+      //   image,
+      //   {
+      //     // get state a function that return all the store state
+      //     headers: {
+      //       Authorization: "Bearer " + getState().auth.user.token,
+      //       "Content-Type": "multipart/form-data",
+      //     },
+      //   }
+      // );
       const { data } = await request.post(
         "/api/users/profile/profile-photo-upload",
-        image,
-        {
-          // get state a function that return all the store state
-          headers: {
-            Authorization: "Bearer " + getState().auth.user.token,
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        image
       );
       dispatch(profileAction.editProfilePhoto(data.profilePhoto));
       dispatch(authActions.editPhotoProfileHeader(data.profilePhoto));
       const user = JSON.parse(localStorage.getItem("userInfo"));
-
       user.profilePhoto = data?.profilePhoto;
       localStorage.setItem("userInfo", JSON.stringify(user));
       toast.success(data.message);
@@ -82,8 +85,6 @@ export function deleteUser(id) {
     }
   };
 }
-
-
 
 /* 
 

@@ -85,7 +85,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
  * @method GET
  */
 const getUsersCount = asyncHandler(async (req, res) => {
-  usersCount = await User.countDocuments();
+  const usersCount = await User.countDocuments();
   res.status(200).json(usersCount);
 });
 
@@ -105,12 +105,13 @@ const updateUserPhotoProfile = asyncHandler(async (req, res) => {
   const imagePath = path.join(__dirname, `../images/${req.file.filename}`);
   // 3.upload to cloudinary
   const result = await cloudinaryUploadImage(imagePath);
+
   // 4.get the user from db
   const user = await User.findById(req.user.id);
   // 5.delete the old profile photo if exist
-  if (user.profilePhoto.publicId !== null) {
-    await cloudinaryRemoveImage(user.profilePhoto.publicId);
-  }
+  // if (user.profilePhoto.publicId !== null) {
+  //   await cloudinaryRemoveImage(user.profilePhoto.publicId);
+  // }
   // 6.change the profilephoto field in the db
   user.profilePhoto = {
     publicId: result.public_id,

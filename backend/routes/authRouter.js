@@ -1,10 +1,14 @@
-const router = require("express").Router()
-const { signUp, login } = require("../controllers/authController")
+const router = require("express").Router();
+const {
+  signUp,
+  login,
+  googleSignInController,
+  logout,
+} = require("../controllers/authController");
 
+router.route("/signup").post(signUp);
+router.route("/login").post(login);
+router.route("/google").post(googleSignInController);
+router.route("/logout").post(logout);
 
-
-router.route("/signup").post(signUp)
-router.route("/login").post(login)
-
-
-module.exports = router
+module.exports = router;

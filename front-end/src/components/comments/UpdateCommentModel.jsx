@@ -1,6 +1,6 @@
 import { useState } from "react"
-import { BsX, BsXCircle } from "react-icons/bs"
-import { toast } from "react-toastify"
+import { BsX } from "react-icons/bs"
+import { toast } from "react-hot-toast"
 import { editComment } from "../../redux/apiCalls/commentsApiCall"
 import { useDispatch } from "react-redux"
 

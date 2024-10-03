@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const joi = require("joi");
 const jwt = require("jsonwebtoken");
-const joiPasswordComplexity = require("joi-password-complexity")
+const joiPasswordComplexity = require("joi-password-complexity");
 
 const UserSchema = new mongoose.Schema(
   {
@@ -43,14 +43,19 @@ const UserSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    provider: {
+      type: String,
+      default: "credentials",
+    },
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 ); // to add 2 properties created at and updated at
 
-UserSchema.virtual("posts", {// new propertie : posts : []
+UserSchema.virtual("posts", {
+  // new propertie : posts : []
   ref: "Post", // reference to Post model
   foreignField: "user",
-  localField: "_id",// get all post that have user == _id 
+  localField: "_id", // get all post that have user == _id
 });
 
 // generate auth token
@@ -64,7 +69,8 @@ const verifySignUp = (object) => {
   const emailSchema = joi.object({
     username: joi.string().required().trim().min(2).max(20),
     email: joi.string().required().trim().min(5).max(50).email(),
-    password: joiPasswordComplexity().required(),
+    password: joi.string().required().trim().min(8),
+    // password: joiPasswordComplexity().required(),
     // profilePhoto: joi.object().default({
     //     url : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png ",
     //     publicId: null,
@@ -79,7 +85,7 @@ const verifySignUp = (object) => {
 const verifyLogin = (obj) => {
   const loginSchema = joi.object({
     email: joi.string().required().trim().min(5).max(50).email(),
-    password: joi.string().required().trim().min(8).max(100),
+    password: joi.string().required().trim().min(8),
   });
 
   return loginSchema.validate(obj);

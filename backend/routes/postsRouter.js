@@ -11,15 +11,15 @@ const {
 const photoUpload = require("../middlewares/photoUpload");
 const validateObjectId = require("../middlewares/validateObjectId");
 const { verifyToken } = require("../middlewares/verifyToken");
-
+const demoAdmin = require("../middlewares/demoAdmin");
 const router = require("express").Router();
 
 router.route("/count").get(getCount);
 router
   .route("/:id")
   .get(validateObjectId, getPostById)
-  .delete(validateObjectId, verifyToken, deletePost)
-  .put(validateObjectId, verifyToken, editPost);
+  .delete(validateObjectId, verifyToken, demoAdmin, deletePost)
+  .put(validateObjectId, verifyToken, demoAdmin, editPost);
 
 router
   .route("/")
@@ -32,6 +32,7 @@ router
     validateObjectId,
     verifyToken,
     photoUpload.single("image"),
+    
     updatePostImage
   );
 

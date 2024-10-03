@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
-import { BsX, BsXCircle } from "react-icons/bs"
+import { BsX } from "react-icons/bs"
 import { useDispatch, useSelector } from "react-redux"
-import { toast } from "react-toastify"
+import { toast } from "react-hot-toast"
 import { updatePostInfo } from "../../redux/apiCalls/postsApiCall"
 import { getCategories } from "../../redux/apiCalls/categoriesCall"
 

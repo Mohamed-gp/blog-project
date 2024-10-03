@@ -34,8 +34,8 @@ const Home = () => {
 
   return (
     <>
-      <Hero />
-      <div className="container px-6 pt-6">
+      {/* <Hero /> */}
+      <div className="container px-6 pt-6" style={{minHeight : "calc(100vh - 80.5px - 54px)"}}>
         <Title title="Latest Posts" />
         <div className="flex flex-col gap-6 content lg:flex-row">
           <Posts posts={posts.slice(0, 2)} />

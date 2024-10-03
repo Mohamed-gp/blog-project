@@ -6,8 +6,8 @@ import { useSelector } from "react-redux"
 const NavBar = ({ toggle, settoggle }) => {
   const user = useSelector(state => state.auth.user)
   return (
-    <nav className={`${toggle ? "open" : "closed"} absolute  left-0 flex justify-center w-screen top-full duration-1000 lg:static menu-responsive pb-4 lg:pb-0 lg:w-auto bg-blue-color sm:text-xl text-sm`}>
-      <ul className="flex flex-col items-center gap-6 bg-blue-color lg:bg-transparent lg:menu-responsive lg:flex-row">
+    <nav className={`${toggle ? "open" : "closed"} absolute  left-0 flex justify-center w-screen top-full duration-1000 xl:static menu-responsive pb-4 xl:pb-0 xl:w-auto bg-blue-color sm:text-xl text-sm`}>
+      <ul className="flex flex-col items-center gap-6 bg-blue-color xl:bg-transparent xl:menu-responsive xl:flex-row">
         <li className="hover:text-main-color">
           <Link to="/" className="flex items-center gap-1" onClick={() => { settoggle(!toggle) }}>
             <BsHouse />

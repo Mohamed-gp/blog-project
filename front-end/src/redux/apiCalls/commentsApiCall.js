@@ -1,6 +1,6 @@
 import request from "../../utils/request";
 import { postsAction } from "../slices/postsSlice";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 
 // export const getComments = (id) => {
 //   return async (dispatch, getState) => {

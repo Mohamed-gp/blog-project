@@ -1,4 +1,4 @@
-import { toast } from "react-toastify"
+import { toast } from "react-hot-toast"
 import Title from "../../components/title/Title"
 import { useState } from "react"
 

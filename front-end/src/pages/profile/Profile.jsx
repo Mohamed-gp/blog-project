@@ -1,7 +1,7 @@
 import { BsCameraFill, BsPersonFill } from "react-icons/bs"
 import Posts from "../../components/posts/Posts"
 import { useEffect, useState } from "react"
-import { toast } from "react-toastify"
+import { toast } from "react-hot-toast"
 import Swal from "sweetalert2"
 import UpdateProfileModel from "./UpdateProfileModel"
 import { useParams } from "react-router-dom"

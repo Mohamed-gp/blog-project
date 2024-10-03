@@ -31,6 +31,7 @@ const addPost = asyncHandler(async (req, res) => {
   }
   // 3. upload photo
   const imagePath = path.join(__dirname, `../images/${req.file.filename}`);
+  console.log("test");
   const result = await cloudinaryUploadImage(imagePath);
   // 4. create post
   //   const post = await Post.create({
@@ -71,7 +72,7 @@ const getAllPosts = asyncHandler(async (req, res) => {
   const postsPerPage = 3;
   const { pageNumber, category } = req.query;
   if (category) {
-    category[0] = category[0].toUpperCase()
+    category[0] = category[0].toUpperCase();
   }
   // if (category && pageNumber) {
   //   const posts = await Post.find({category : category}).limit(postsPerPage).skip((pageNumber - 1) * postsPerPage)
@@ -94,7 +95,7 @@ const getAllPosts = asyncHandler(async (req, res) => {
       .sort({ createdAt: -1 })
       .populate("user comments", ["-password"]);
   } else if (category) {
-    posts = await Post.find({ category : category })
+    posts = await Post.find({ category: category })
       .sort({ createdAt: -1 })
       .populate("user comments", ["-password"]);
   } else {

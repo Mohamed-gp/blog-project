@@ -10,8 +10,8 @@ const authSlice = createSlice({
   },
   reducers: {
     login(state, action) {
-      // action.payload we get when we call login({} :payload)
       state.user = action.payload;
+      localStorage.setItem("userInfo", JSON.stringify(action.payload));
     },
     logout(state,action) {
       state.user = null

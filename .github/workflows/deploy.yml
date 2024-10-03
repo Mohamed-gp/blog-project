@@ -1,0 +1,28 @@
+name: Deploy Krelli App to VPS
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch: # Enable manual triggering
+
+jobs:
+  build:
+    runs-on: self-hosted
+    strategy:
+      matrix:
+        node-version: [18.x] # Use Node.js 18.x
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Deploy to VPS
+        run: |
+          cd /home/mohamed/projects/blog-project
+          git pull origin master
+          npm install --prefix backend
+          npm install --prefix front-end
+          npm run build --prefix front-end
+          pm2 restart blog-backend
+          pm2 restart blog-frontend

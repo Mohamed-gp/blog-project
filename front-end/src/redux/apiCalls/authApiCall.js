@@ -1,5 +1,5 @@
 // Import the authActions from the authSlice file
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { authActions } from "../slices/authSlice";
 import request from "../../utils/request";
 
@@ -20,15 +20,15 @@ export function loginUser(user) {
       //     }
       // });
 
-      const response = await request.post("/api/auth/login", user);
+      const { data } = await request.post("/api/auth/login", user);
       // const {data} = await axios.post("http://localhost:3000/api/auth/login",user)
 
       // Parse the response body as JSON
       // with fetch
       // const data = await response.json();
       // Dispatch the login action with the data received from the server
-      dispatch(authActions.login(response.data));
-      localStorage.setItem("userInfo", JSON.stringify(response.data));
+      dispatch(authActions.login(data.data));
+      localStorage.setItem("userInfo", JSON.stringify(data.data));
     } catch (error) {
       // Log any errors that occur during the API call
       toast.error(error.response.data.message);
@@ -48,14 +48,12 @@ export function registerUser(user) {
   return async (dispatch) => {
     // get state takes the state from the store
     try {
-      const response = await request.post("/api/auth/signup", user);
-      dispatch(authActions.register(response.data.user));
-      localStorage.setItem("userInfo", JSON.stringify(response.data.user));
+      const { data } = await request.post("/api/auth/signup", user);
+      dispatch(authActions.login(data.data));
       localStorage.setItem(
         "userRegisteredMessage",
-        JSON.stringify(response.data.message)
+        JSON.stringify(data.message)
       );
-      console.log(response.data.message)
     } catch (error) {
       // Log any errors that occur during the API call
       toast.error(error.response.data.message);

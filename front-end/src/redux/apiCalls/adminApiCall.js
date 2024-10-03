@@ -1,4 +1,4 @@
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import request from "../../utils/request";
 import { adminActions } from "../slices/adminSlice";
 import { categoriesActions } from "../slices/categorySlice";
@@ -59,12 +59,12 @@ export const createCategory = (title) => {
 export const deleteCategory = (categoryId) => {
   return async (dispatch, getState) => {
     try {
-      await request.delete(`/api/categories/${categoryId}`,{
-        headers : {
-            Authorization : "Bearer " + getState().auth.user.token
-        }
+      await request.delete(`/api/categories/${categoryId}`, {
+        headers: {
+          Authorization: "Bearer " + getState().auth.user.token,
+        },
       });
-      dispatch(categoriesActions.removeCate({id : categoryId}))
+      dispatch(categoriesActions.removeCate({ id: categoryId }));
     } catch (error) {
       toast.error(error.response.data.message);
       console.log(error.response.data.message);
@@ -72,87 +72,77 @@ export const deleteCategory = (categoryId) => {
   };
 };
 
-
 export const getUsers = () => {
-    return async (dispatch,getState) => {
-        try {
-            const {data} = await request.get("/api/users/profile",{
-                headers : {
-                    Authorization : "Bearer " + getState().auth.user.token
-                }
-            })
+  return async (dispatch, getState) => {
+    try {
+      const { data } = await request.get("/api/users/profile", {
+        headers: {
+          Authorization: "Bearer " + getState().auth.user.token,
+        },
+      });
 
-            dispatch(adminActions.setUsers(data))
-            
-        } catch (error) {
-            toast.error(error.response.data.message);
-            console.log(error.response.data.message);
-        }
+      dispatch(adminActions.setUsers(data));
+    } catch (error) {
+      toast.error(error.response.data.message);
+      console.log(error.response.data.message);
     }
-}
+  };
+};
 
 export const deleteUser = (userId) => {
-    return async (dispatch,getState ) => {
-        try {
-            await request.delete(`/api/users/profile/${userId}`,{
-                headers : {
-                    Authorization : "Bearer " + getState().auth.user.token
-                }
-            })
-            dispatch(adminActions.deleteUser(userId))
-            
-        } catch (error) {
-            toast.error(error.response.data.message);
-            console.log(error.response.data.message);
-        }
+  return async (dispatch, getState) => {
+    try {
+      await request.delete(`/api/users/profile/${userId}`, {
+        headers: {
+          Authorization: "Bearer " + getState().auth.user.token,
+        },
+      });
+      dispatch(adminActions.deleteUser(userId));
+    } catch (error) {
+      toast.error(error.response.data.message);
+      console.log(error.response.data.message);
     }
-}
+  };
+};
 
 export const getAllPosts = () => {
-    return async (dispatch,getState) => {
-        try {
-            const {data} = await request.get("/api/posts")
-            dispatch(adminActions.setPosts(data))
-        } catch (error) {
-            toast.error(error.response.data.message);
-            console.log(error.response.data.message);
-        }
+  return async (dispatch, getState) => {
+    try {
+      const { data } = await request.get("/api/posts");
+      dispatch(adminActions.setPosts(data));
+    } catch (error) {
+      toast.error(error.response.data.message);
+      console.log(error.response.data.message);
     }
-}
+  };
+};
 
 export const deletePost = (postId) => {
-    return async (dispatch,getState) => {
-        try {
-            await request.delete(`/api/posts/${postId}`,{
-                headers : {
-                    Authorization : "Bearer " + getState().auth.user.token
-                }
-            })
+  return async (dispatch, getState) => {
+    try {
+      await request.delete(`/api/posts/${postId}`);
 
-            dispatch(adminActions.deletePost(postId))
-            
-        } catch (error) {
-            toast.error(error.response.data.message);
-            console.log(error.response.data.message);
-        }
+      dispatch(adminActions.deletePost(postId));
+    } catch (error) {
+      toast.error(error.response.data.message);
+      console.log(error.response.data.message);
     }
-}
-
-
+  };
+};
 
 export const deleteComment = (commentId) => {
-    return async (dispatch,getState) => {
-        try {
-            await request.delete(`/api/comments/${commentId}`,{
-                headers : {
-                    Authorization : "Bearer " + getState().auth.user.token
-                }
-            })
+  return async (dispatch, getState) => {
+    try {
+      await request.delete(`/api/comments/${commentId}`, {
+        headers: {
+          Authorization: "Bearer " + getState().auth.user.token,
+        },
+      });
 
-            adminActions.deleteComment(commentId)
-        } catch (error) {
-            toast.error(error.response.data.message);
-            console.log(error.response.data.message);
-        }
+      adminActions.deleteComment(commentId);
+    } catch (error) {
+      toast.error(error.response.data.message);
+      console.log(error.response.data.message);
     }
-}
+  };
+};

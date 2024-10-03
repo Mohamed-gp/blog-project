@@ -1,6 +1,5 @@
 import { useState } from "react"
 import { useDispatch } from "react-redux"
-import { toast } from "react-toastify"
 import { createComment } from "../../redux/apiCalls/commentsApiCall"
 
 const AddComment = ({ postId }) => {

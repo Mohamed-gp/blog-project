@@ -1,12 +1,13 @@
 const jwt = require("jsonwebtoken");
-
+const express = require("express");
+const cookieParser = require("cookie-parser");
 // verifyToken
 
 function verifyToken(req, res, next) {
   // authorization == in upper case
-  const authToken = req.headers.authorization;
-  if (authToken) {
-    const token = authToken.split(" ")[1];
+  const token = req.cookies["blog-token"];
+
+  if (token) {
     try {
       const decodedPayload = jwt.verify(token, process.env.JWT_KEY);
       req.user = decodedPayload;
@@ -46,12 +47,12 @@ function verifyTokenAndUser(req, res, next) {
 function verifyTokenAndUserAndAdmin(req, res, next) {
   verifyToken(req, res, () => {
     if (req.user.id != req.params.id && !req.user.isAdmin) {
-        return res
+      return res
         .status(403)
         .json({ message: "you are not allowed only user himself and admin" });
     }
     next();
-    });
+  });
 }
 
 module.exports = {

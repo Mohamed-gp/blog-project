@@ -27,18 +27,24 @@ const signUp = asyncHandler(async (req, res) => {
   await user.save();
   const token = user.generateAuthToken();
 
-  // 201 => created succefully
-  res.status(201).json({
-    user: {
-      _id: user._id,
-      username: user.username,
-      isAdmin: user.isAdmin,
-      profilePhoto: user.profilePhoto,
-      token,
-    },
-    message:
-      "Congratulations! You have successfully signed up. you can explore our platform ",
-  });
+  user.password = "";
+  res
+    .cookie("blog-token", token, {
+      httpOnly: true,
+      sameSite: "none",
+      maxAge: 1000 * 60 * 60 * 24 * 365,
+      secure: process.env.NODE_ENV == "development" ? false : true,
+      domain:
+        process.env.NODE_ENV == "development"
+          ? "localhost"
+          : "production-server.tech",
+    })
+    .status(201)
+    .json({
+      data: user,
+      message:
+        "Congratulations! You have successfully signed up. you can explore our platform ",
+    });
 });
 
 /**
@@ -65,17 +71,109 @@ const login = asyncHandler(async (req, res) => {
   }
 
   const token = user.generateAuthToken();
+  user.password = "";
+  res
+    .status(200)
+    .cookie("blog-token", token, {
+      httpOnly: true,
+      sameSite: "none",
+      maxAge: 1000 * 60 * 60 * 24 * 365,
+      secure: process.env.NODE_ENV == "development" ? false : true,
+      domain:
+        process.env.NODE_ENV == "development"
+          ? "localhost"
+          : "production-server.tech",
+    })
+    .json({
+      data: user,
+      message: "login successfully",
+    });
+});
 
-  res.status(200).json({
-    _id: user._id,
-    username: user.username,
-    isAdmin: user.isAdmin,
-    profilePhoto: user.profilePhoto,
-    token,
+/**
+ *
+ * @METHOD POST
+ * @ROUTE /api/auth/google
+ * @DESC Google Sign In
+ * @ACCESS Public
+ */
+const googleSignInController = asyncHandler(async (req, res, next) => {
+  const { username, email, profilePhoto } = req.body;
+  let user = await User.findOne({
+    email,
   });
+
+  if (user) {
+    const token = user.generateAuthToken();
+    user.password = "";
+    console.log(
+      process.env.NODE_ENV == "development"
+        ? "localhost"
+        : "production-server.tech"
+    );
+    return res
+      .cookie("blog-token", token, {
+        httpOnly: true,
+        sameSite: "None",
+        secure: process.env.NODE_ENV === "development" ? false : true,
+        domain:
+          process.env.NODE_ENV == "development"
+            ? "localhost"
+            : "production-server.tech",
+      })
+      .json({ data: user, message: "login successfully" })
+      .status(200);
+  } else {
+    const generatedPassword =
+      Math.random().toString(36).slice(-8) +
+      Math.random().toString(36).slice(-8);
+
+    user = new User({
+      email,
+      username,
+      password: await bcrypt.hash(generatedPassword, 10),
+      provider: "google",
+      profilePhoto: {
+        publicId: "image" + profilePhoto,
+        url: profilePhoto,
+      },
+    });
+    await user.save();
+    const token = user.generateAuthToken();
+    user.password = "";
+    return res
+      .cookie("blog-token", token, {
+        httpOnly: true,
+        sameSite: "None",
+        secure: process.env.NODE_ENV === "development" ? false : true,
+        domain:
+          process.env.NODE_ENV == "development"
+            ? "localhost"
+            : "production-server.tech",
+      })
+      .json({ data: user, message: "user created successfully" })
+      .status(201);
+  }
+});
+
+const logout = asyncHandler(async (req, res) => {
+  res
+    .clearCookie("blog-token", {
+      httpOnly: true,
+      sameSite: "none",
+      secure: process.env.NODE_ENV == "development" ? false : true,
+      domain:
+        process.env.NODE_ENV == "development"
+          ? "localhost"
+          : "production-server.tech",
+    })
+    .status(200)
+    .json({ data: null, message: "logout successfully" });
 });
 
 module.exports = {
   signUp,
   login,
+  googleSignInController,
+  logout,
 };

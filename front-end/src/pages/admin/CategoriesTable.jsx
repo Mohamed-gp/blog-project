@@ -15,7 +15,7 @@ const CategoriesTable = () => {
     const removeHandler = (categoryId) => {
         
         Swal.fire({
-            title: "Are you sure to remove this user?",
+            title: "Are you sure to remove this category?",
             text: "You won't be able to revert this!",
             icon: "warning",
             showCancelButton: true,
@@ -27,7 +27,7 @@ const CategoriesTable = () => {
                 dispatch(deleteCategory(categoryId))
               Swal.fire({
                 title: "Deleted!",
-                text: "The user has been deleted.",
+                text: "The category has been deleted.",
                 icon: "success"
               });
             }

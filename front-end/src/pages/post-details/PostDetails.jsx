@@ -2,14 +2,14 @@ import { Link, useParams } from "react-router-dom"
 import { BsFillHandThumbsUpFill, BsFillTrashFill, BsImageFill, BsPencilSquare } from "react-icons/bs";
 import Title from "../../components/title/Title";
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import AddComment from "../../components/comments/AddComment";
 import CommentsList from "../../components/comments/CommentsList";
 import Swal from "sweetalert2";
 import UpdatePostModel from "./UpdatePostModel";
 import UpdateCommentModel from "../../components/comments/UpdateCommentModel";
 import { useDispatch, useSelector } from "react-redux";
-import { deletePost, getPostById, getPosts, likeToggle, updatePostImage } from "../../redux/apiCalls/postsApiCall";
+import { deletePost, getPostById, likeToggle, updatePostImage } from "../../redux/apiCalls/postsApiCall";
 import { useNavigate } from "react-router-dom";
 
 
@@ -19,7 +19,6 @@ const PostDetails = () => {
   const [isOpenModel, setisOpenModel] = useState(false)
   const [commentPostModel, setcommentPostModel] = useState(false)
   const [file, setfile] = useState(null)
-  const posts = useSelector(state => state.postsReducer.posts)
   const post = useSelector(state => state.postsReducer.post)
   const user = useSelector(state => state.auth.user)
   const { id } = useParams()

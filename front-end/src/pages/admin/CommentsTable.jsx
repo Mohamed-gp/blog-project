@@ -26,7 +26,7 @@ const CommentsTable = () => {
             if (result.isConfirmed) {
                 Swal.fire({
                     title: "Deleted!",
-                    text: "The user has been deleted.",
+                    text: "The comment has been deleted.",
                     icon: "success"
                 });
             }

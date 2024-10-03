@@ -1,4 +1,4 @@
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import request from "../../utils/request";
 import { postsAction } from "../slices/postsSlice";
 
@@ -30,9 +30,11 @@ export function getPostsCount() {
 export function getPostBasedCate(category) {
   return async (dispatch) => {
     try {
-      console.log(category.toLowerCase(),"from based")
-      const { data } = await request.get(`/api/posts?category=${category.toLowerCase()}`);
-      console.log(data)
+      console.log(category.toLowerCase(), "from based");
+      const { data } = await request.get(
+        `/api/posts?category=${category.toLowerCase()}`
+      );
+      console.log(data);
       dispatch(postsAction.setPostsCate(data));
     } catch (error) {
       console.log(error.response.data.message);
@@ -45,12 +47,8 @@ export function createPost(info) {
   return async (dispatch, getState) => {
     try {
       dispatch(postsAction.setLoadingTrue());
-      const { data } = await request.post("/api/posts", info, {
-        headers: {
-          Authorization: "Bearer " + getState().auth.user.token,
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const { data } = await request.post("/api/posts", info);
+      console.log(data);
       // dispatch(postsAction.setPostinProcessTrue());
       // dispatch(postsAction.setPostinProcessFalse());
       dispatch(postsAction.setLoadingFalse());
@@ -131,22 +129,19 @@ export function updatePostInfo(postId, postInfo) {
   };
 }
 
-
-export function deletePost (postId) {
-  return async (dispatch,getState) => {
+export function deletePost(postId) {
+  return async (dispatch, getState) => {
     try {
-      const { data } = await request.delete(`/api/posts/${postId}`,{
+      const { data } = await request.delete(`/api/posts/${postId}`, {
         headers: {
           Authorization: "Bearer " + getState().auth.user.token,
         },
       });
 
-      dispatch(postsAction.deletePost({id : postId}))
-      
-
+      dispatch(postsAction.deletePost({ id: postId }));
     } catch (error) {
       console.log(error.response.data.message);
       toast.error(error.response.data.message);
     }
-  }
-} 
+  };
+}

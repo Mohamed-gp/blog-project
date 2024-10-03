@@ -1,9 +1,9 @@
 const cloudinary = require("cloudinary");
 
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUD_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_KEY,
+  api_secret: process.env.CLOUDINARY_SEC,
 });
 
 //  cloudinary upload image
@@ -27,7 +27,7 @@ const cloudinaryUploadImage = async (fileToUpload) => {
 const cloudinaryRemoveImage = async (imagePublicId) => {
   try {
     const result = await cloudinary.uploader.destroy(imagePublicId);
-    return result
+    return result;
   } catch (error) {
     // to error handler catch this problem
     console.log(error);
